@@ -85,9 +85,18 @@ export const fichaMatrimonialSchema = z.object({
     affiliation: z.string().optional(),
     correlative: z.string().optional(),
     encounterYear: z.string().optional(),
+    belongsToGroup: z.boolean().optional(),
     group: z.string().optional(),
     civilMarriageDate: z.date().optional(),
     religiousMarriageDate: z.date().optional(),
+  }).refine(data => {
+    if (data.belongsToGroup && !data.group) {
+      return false;
+    }
+    return true;
+  }, {
+    message: "El nombre del grupo es requerido.",
+    path: ["group"],
   }),
   groomData: personSchema,
   brideData: personSchema,

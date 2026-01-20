@@ -39,6 +39,7 @@ export function FichaMatrimonialForm() {
         correlative: "",
         encounterYear: "",
         group: "",
+        belongsToGroup: undefined,
       },
       groomData: {
         names: "",
