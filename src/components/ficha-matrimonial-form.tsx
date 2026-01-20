@@ -13,7 +13,6 @@ import {
   CardTitle,
   CardDescription,
 } from "@/components/ui/card";
-import { DatePicker } from "@/components/ui/date-picker";
 import {
   Form,
   FormControl,
@@ -35,6 +34,7 @@ import { PersonDetailsSection } from "./sections/person-details-section";
 import { ServerRetreatsSection } from "./sections/server-retreats-section";
 import { SecretariatsSection } from "./sections/secretariats-section";
 import { GrowthGroupsSection } from "./sections/growth-groups-section";
+import { MarriageDetailsSection } from "./sections/marriage-details-section";
 
 export function FichaMatrimonialForm() {
   const [isLoading, setIsLoading] = useState(false);
@@ -44,8 +44,14 @@ export function FichaMatrimonialForm() {
     resolver: zodResolver(fichaMatrimonialSchema),
     defaultValues: {
       marriageData: {
-        parish: "",
-        priest: "",
+        memberCode: "",
+        encounterNumber: "",
+        community: "",
+        country: "",
+        affiliation: "",
+        correlative: "",
+        encounterYear: "",
+        group: "",
       },
       groomData: {
         name: "",
@@ -88,56 +94,7 @@ export function FichaMatrimonialForm() {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-        <Card>
-          <CardHeader>
-            <CardTitle>Datos del Matrimonio</CardTitle>
-          </CardHeader>
-          <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <FormField
-              control={form.control}
-              name="marriageData.marriageDate"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Fecha de Matrimonio</FormLabel>
-                  <FormControl>
-                    <DatePicker
-                      value={field.value}
-                      onChange={field.onChange}
-                      placeholder="Seleccione la fecha de matrimonio"
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="marriageData.parish"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Parroquia</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Nombre de la parroquia" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="marriageData.priest"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Sacerdote</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Nombre del sacerdote" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </CardContent>
-        </Card>
+        <MarriageDetailsSection control={form.control} />
 
         <PersonDetailsSection control={form.control} part="groomData" title="Datos Personales de Él" />
         <PersonDetailsSection control={form.control} part="brideData" title="Datos Personales de Ella" />

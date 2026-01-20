@@ -41,9 +41,16 @@ const growthGroupSchema = z.object({
 
 export const fichaMatrimonialSchema = z.object({
   marriageData: z.object({
-    marriageDate: z.date({ required_error: "Este campo es requerido." }),
-    parish: requiredString,
-    priest: requiredString,
+    memberCode: z.string().optional(),
+    encounterNumber: requiredString,
+    community: requiredString,
+    country: z.string().optional(),
+    affiliation: z.string().optional(),
+    correlative: z.string().optional(),
+    encounterYear: z.string().optional(),
+    group: z.string().optional(),
+    civilMarriageDate: z.date().optional(),
+    religiousMarriageDate: z.date().optional(),
   }),
   groomData: personSchema,
   brideData: personSchema,
