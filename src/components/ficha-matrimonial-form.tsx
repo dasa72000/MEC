@@ -11,7 +11,6 @@ import {
   CardContent,
   CardHeader,
   CardTitle,
-  CardDescription,
 } from "@/components/ui/card";
 import {
   Form,
@@ -23,18 +22,17 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from "@/hooks/use-toast";
 import {
   fichaMatrimonialSchema,
   type FichaMatrimonialData,
-  GROWTH_LADDER_STEPS,
 } from "@/lib/schema";
 import { PersonDetailsSection } from "./sections/person-details-section";
 import { ServerRetreatsSection } from "./sections/server-retreats-section";
 import { SecretariatsSection } from "./sections/secretariats-section";
 import { GrowthGroupsSection } from "./sections/growth-groups-section";
 import { MarriageDetailsSection } from "./sections/marriage-details-section";
+import { GrowthLadderSection } from "./sections/growth-ladder-section";
 
 export function FichaMatrimonialForm() {
   const [isLoading, setIsLoading] = useState(false);
@@ -117,55 +115,7 @@ export function FichaMatrimonialForm() {
           </CardContent>
         </Card>
 
-        <Card>
-          <CardHeader>
-            <CardTitle>Escalera de Crecimiento</CardTitle>
-            <CardDescription>Marque los pasos que han completado.</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <FormField
-                control={form.control}
-                name="growthLadder"
-                render={() => (
-                    <FormItem className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                        {GROWTH_LADDER_STEPS.map((item) => (
-                            <FormField
-                                key={item}
-                                control={form.control}
-                                name="growthLadder"
-                                render={({ field }) => {
-                                    return (
-                                        <FormItem
-                                            key={item}
-                                            className="flex flex-row items-start space-x-3 space-y-0"
-                                        >
-                                            <FormControl>
-                                                <Checkbox
-                                                    checked={field.value?.includes(item)}
-                                                    onCheckedChange={(checked) => {
-                                                        return checked
-                                                            ? field.onChange([...field.value, item])
-                                                            : field.onChange(
-                                                                field.value?.filter(
-                                                                    (value) => value !== item
-                                                                )
-                                                            )
-                                                    }}
-                                                />
-                                            </FormControl>
-                                            <FormLabel className="font-normal">
-                                                {item}
-                                            </FormLabel>
-                                        </FormItem>
-                                    )
-                                }}
-                            />
-                        ))}
-                    </FormItem>
-                )}
-            />
-          </CardContent>
-        </Card>
+        <GrowthLadderSection control={form.control} />
 
         <ServerRetreatsSection control={form.control} />
         <SecretariatsSection control={form.control} />

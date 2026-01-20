@@ -54,6 +54,11 @@ const growthGroupSchema = z.object({
   encounter: requiredString,
 });
 
+const growthLadderEntrySchema = z.object({
+  name: z.string(),
+  date: z.date().optional(),
+});
+
 
 export const fichaMatrimonialSchema = z.object({
   marriageData: z.object({
@@ -77,7 +82,7 @@ export const fichaMatrimonialSchema = z.object({
     zip: requiredString,
     homePhone: requiredString,
   }),
-  growthLadder: z.array(z.string()).default([]),
+  growthLadder: z.array(growthLadderEntrySchema).default([]),
   serverRetreats: serverRetreatsSchema,
   secretariats: z.array(secretariatSchema).default([]),
   growthGroups: z.array(growthGroupSchema).default([]),
@@ -86,4 +91,13 @@ export const fichaMatrimonialSchema = z.object({
 
 export type FichaMatrimonialData = z.infer<typeof fichaMatrimonialSchema>;
 
-export const GROWTH_LADDER_STEPS = ["Encuentro", "Crecimiento 1", "Crecimiento 2", "Comunidad de Comunidades", "Opción Fundamental"];
+export const GROWTH_LADDER_STEPS = [
+  "Diálogo",
+  "Renovación Conyugal",
+  "Fe y Conversión",
+  "Escuela de Animadores",
+  "Pastoreo",
+  "Reencuentro",
+  "Convivencia Familiar",
+  "Alrededor de la Mesa",
+];
