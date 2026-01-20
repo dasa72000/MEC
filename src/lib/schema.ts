@@ -5,17 +5,15 @@ const requiredString = z.string().min(1, "Este campo es requerido.");
 const yearSchema = z.coerce.number().int().min(1970, "El año debe ser mayor a 1970").max(2035, "El año debe ser menor a 2035");
 
 const personSchema = z.object({
-  name: requiredString,
+  names: requiredString,
+  lastNames: requiredString,
   birthDate: z.date({ required_error: "Este campo es requerido." }),
-  phone: requiredString,
-  email: requiredString.email("Email inválido."),
+  dui: requiredString,
+  nit: requiredString,
   occupation: requiredString,
-  studies: requiredString,
-  sacraments: z.object({
-    baptism: z.boolean().default(false),
-    communion: z.boolean().default(false),
-    confirmation: z.boolean().default(false),
-  }),
+  email: requiredString.email("Email inválido."),
+  cellPhone: requiredString,
+  officePhone: requiredString,
 });
 
 const serverRetreatSchema = z.object({

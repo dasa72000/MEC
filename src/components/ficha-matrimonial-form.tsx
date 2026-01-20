@@ -54,20 +54,26 @@ export function FichaMatrimonialForm() {
         group: "",
       },
       groomData: {
-        name: "",
-        phone: "",
-        email: "",
+        names: "",
+        lastNames: "",
+        birthDate: undefined,
+        dui: "",
+        nit: "",
         occupation: "",
-        studies: "",
-        sacraments: { baptism: false, communion: false, confirmation: false },
+        email: "",
+        cellPhone: "",
+        officePhone: "",
       },
       brideData: {
-        name: "",
-        phone: "",
-        email: "",
+        names: "",
+        lastNames: "",
+        birthDate: undefined,
+        dui: "",
+        nit: "",
         occupation: "",
-        studies: "",
-        sacraments: { baptism: false, communion: false, confirmation: false },
+        email: "",
+        cellPhone: "",
+        officePhone: "",
       },
       address: { street: "", city: "", state: "", zip: "", homePhone: "" },
       growthLadder: [],
@@ -96,8 +102,7 @@ export function FichaMatrimonialForm() {
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
         <MarriageDetailsSection control={form.control} />
 
-        <PersonDetailsSection control={form.control} part="groomData" title="Datos Personales de Él" />
-        <PersonDetailsSection control={form.control} part="brideData" title="Datos Personales de Ella" />
+        <PersonDetailsSection control={form.control} />
 
         <Card>
           <CardHeader>
