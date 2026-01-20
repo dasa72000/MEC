@@ -77,7 +77,7 @@ export function FichaMatrimonialForm() {
       },
       address: { street: "", city: "", state: "", zip: "", homePhone: "" },
       growthLadder: [],
-      serverRetreats: [],
+      serverRetreats: {},
       secretariats: [],
       growthGroups: [],
       observations: "",

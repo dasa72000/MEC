@@ -16,12 +16,30 @@ const personSchema = z.object({
   officePhone: requiredString,
 });
 
-const serverRetreatSchema = z.object({
-  year: yearSchema,
-  month: requiredString,
+export const RETREAT_TYPES = [
+    "Encuentro",
+    "Diálogo",
+    "Fe y Conversión",
+    "Reencuentro",
+    "Renovación Conyugal",
+    "Escuela de Animadores"
+] as const;
+
+const serverRetreatEntrySchema = z.object({
+  date: z.date({ required_error: "Este campo es requerido." }),
   role: requiredString,
   comments: z.string().optional(),
 });
+
+const serverRetreatsSchema = z.object({
+    Encuentro: z.array(serverRetreatEntrySchema).optional(),
+    Diálogo: z.array(serverRetreatEntrySchema).optional(),
+    "Fe y Conversión": z.array(serverRetreatEntrySchema).optional(),
+    Reencuentro: z.array(serverRetreatEntrySchema).optional(),
+    "Renovación Conyugal": z.array(serverRetreatEntrySchema).optional(),
+    "Escuela de Animadores": z.array(serverRetreatEntrySchema).optional(),
+}).default({});
+
 
 const secretariatSchema = z.object({
   name: requiredString,
@@ -60,7 +78,7 @@ export const fichaMatrimonialSchema = z.object({
     homePhone: requiredString,
   }),
   growthLadder: z.array(z.string()).default([]),
-  serverRetreats: z.array(serverRetreatSchema).default([]),
+  serverRetreats: serverRetreatsSchema,
   secretariats: z.array(secretariatSchema).default([]),
   growthGroups: z.array(growthGroupSchema).default([]),
   observations: z.string().optional(),
