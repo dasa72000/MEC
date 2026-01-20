@@ -3,8 +3,8 @@ import './globals.css';
 import { Toaster } from "@/components/ui/toaster";
 
 export const metadata: Metadata = {
-  title: 'Ficha Matrimonial',
-  description: 'Formulario de Ficha Matrimonial',
+  title: 'Censo 2026',
+  description: 'Movimiento Encuentros Conyugales - Censo 2026',
 };
 
 export default function RootLayout({
