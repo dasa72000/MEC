@@ -128,7 +128,7 @@ export function MarriageDetailsSection({ control }: MarriageDetailsSectionProps)
                                     name="marriageData.correlative"
                                     render={({ field }) => (
                                         <FormItem>
-                                            <FormLabel>Correla</FormLabel>
+                                            <FormLabel>Numero de Encuentro</FormLabel>
                                             <FormControl>
                                                 <Input placeholder="Ej: 0082" {...field} />
                                             </FormControl>
