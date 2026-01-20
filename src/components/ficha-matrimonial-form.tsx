@@ -5,7 +5,6 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2 } from "lucide-react";
 
-import { validateFormData } from "@/ai/flows/validate-form-data";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -18,7 +17,6 @@ import { DatePicker } from "@/components/ui/date-picker";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -76,41 +74,15 @@ export function FichaMatrimonialForm() {
 
   async function onSubmit(data: FichaMatrimonialData) {
     setIsLoading(true);
-    try {
-      const validationResult = await validateFormData(data);
-      if (validationResult.isValid) {
-        toast({
-          title: "✅ Formulario Válido",
-          description:
-            "Todos los datos han sido validados correctamente por la IA.",
-        });
-        // Here you would typically send the data to your backend
-        console.log("Form data submitted:", data);
-      } else {
-        toast({
-          variant: "destructive",
-          title: "❌ Errores de Validación de IA",
-          description: (
-            <ul className="list-disc pl-5">
-              {validationResult.errors.map((error, i) => (
-                <li key={i}>{error}</li>
-              ))}
-            </ul>
-          ),
-          duration: 9000,
-        });
-      }
-    } catch (error) {
-      toast({
-        variant: "destructive",
-        title: "Error Inesperado",
-        description:
-          "Ocurrió un error al validar el formulario. Inténtalo de nuevo.",
-      });
-      console.error(error);
-    } finally {
-      setIsLoading(false);
-    }
+    // Here you would typically send the data to your backend
+    console.log("Form data submitted:", data);
+    await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate network request
+    toast({
+      title: "✅ Formulario Guardado",
+      description:
+        "Todos los datos han sido guardados correctamente.",
+    });
+    setIsLoading(false);
   }
 
   return (
@@ -265,7 +237,7 @@ export function FichaMatrimonialForm() {
         <div className="flex justify-end">
           <Button type="submit" disabled={isLoading} size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90">
             {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-            Validar y Guardar
+            Guardar
           </Button>
         </div>
       </form>
