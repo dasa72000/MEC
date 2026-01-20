@@ -3,11 +3,6 @@
 import { format } from 'date-fns';
 import type { FichaMatrimonialData } from './schema';
 
-// =====================================================================================
-// == PASO 1: Reemplaza los IDs de placeholder con los IDs de tu Google Form.         ==
-// =====================================================================================
-// Sigue las instrucciones para obtener el enlace de pre-rellenado y encuentra
-// el ID de "entry.xxxxxxxx" que corresponde a cada campo.
 const fieldMappings = {
   // Datos del Matrimonio
   memberCode: 'entry.1156990869',
@@ -103,6 +98,11 @@ function formatGrowthGroups(groups: any[] | undefined): string {
 export async function submitToGoogleForm(data: FichaMatrimonialData) {
     const formData = new FormData();
 
+    // --- INICIO: LOGS DE DEPURACIÓN ---
+    console.log("---------- Datos a Enviar a Google Forms ----------");
+    console.log("Datos crudos del formulario:", data);
+    // --- FIN: LOGS DE DEPURACIÓN ---
+
     formData.append(fieldMappings.memberCode, data.marriageData.memberCode || '');
     formData.append(fieldMappings.encounterNumber, data.marriageData.encounterNumber);
     formData.append(fieldMappings.community, data.marriageData.community);
@@ -164,9 +164,6 @@ export async function submitToGoogleForm(data: FichaMatrimonialData) {
 
     formData.append(fieldMappings.observations, data.observations || 'Sin observaciones.');
     
-    // =====================================================================================
-    // == PASO 2: Reemplaza esta URL con la URL de acción de tu Google Form.             ==
-    // =====================================================================================
     const GOOGLE_FORM_ACTION_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSceHliAO4zEK7CdhQwq2oSXls9E_S6PHE10EMOa86nTEhKxsA/formResponse';
     
     try {
