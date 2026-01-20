@@ -169,5 +169,5 @@ export function submitToGoogleForm(data: FichaMatrimonialData) {
     
     const fullUrl = `${GOOGLE_FORM_VIEW_URL}?${params.toString()}`;
     
-    window.open(fullUrl, '_blank');
+    console.log('Generated Google Form URL for verification:', fullUrl);
 }
