@@ -37,7 +37,6 @@ export function FichaMatrimonialForm() {
         community: '',
         country: 'El Salvador',
         affiliation: '',
-        correlative: '',
         encounterYear: '',
         group: '',
       },

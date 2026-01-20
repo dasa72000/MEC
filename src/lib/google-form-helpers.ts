@@ -10,7 +10,6 @@ const fieldMappings = {
   community: 'entry.1088149683',
   country: 'entry.791191831',
   affiliation: 'entry.553504835',
-  correlative: 'entry.301217874',
   encounterYear: 'entry.1308011902',
   civilMarriageDate: 'entry.1705889295',
   religiousMarriageDate: 'entry.2019193873',
@@ -115,7 +114,6 @@ export function submitToGoogleForm(data: FichaMatrimonialData) {
     appendData(fieldMappings.community, data.marriageData.community);
     appendData(fieldMappings.country, data.marriageData.country);
     appendData(fieldMappings.affiliation, data.marriageData.affiliation);
-    appendData(fieldMappings.correlative, data.marriageData.correlative);
     appendData(fieldMappings.encounterYear, data.marriageData.encounterYear);
     appendData(fieldMappings.civilMarriageDate, formatDate(data.marriageData.civilMarriageDate));
     appendData(fieldMappings.religiousMarriageDate, formatDate(data.marriageData.religiousMarriageDate));
@@ -173,6 +171,5 @@ export function submitToGoogleForm(data: FichaMatrimonialData) {
     
     const fullUrl = `${GOOGLE_FORM_VIEW_URL}?${params.toString()}`;
     
-    console.log("Generated Google Form URL:", fullUrl);
     window.open(fullUrl, '_blank');
 }

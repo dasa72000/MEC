@@ -83,7 +83,6 @@ export const fichaMatrimonialSchema = z.object({
     community: requiredString,
     country: z.string().optional(),
     affiliation: z.string().optional(),
-    correlative: z.string().optional(),
     encounterYear: z.string().optional(),
     belongsToGroup: z.boolean().optional(),
     group: z.string().optional(),
