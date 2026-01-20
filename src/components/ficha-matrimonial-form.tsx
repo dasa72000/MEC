@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState } from "react";
@@ -33,66 +32,57 @@ export function FichaMatrimonialForm() {
     resolver: zodResolver(fichaMatrimonialSchema),
     defaultValues: {
       marriageData: {
-        encounterNumber: '123',
-        community: '001 - Sede Central - Parroquia',
+        encounterNumber: '',
+        community: '',
         country: 'El Salvador',
-        affiliation: 'Afiliación de Prueba',
-        encounterDate: new Date('2022-10-15T06:00:00.000Z'),
-        civilMarriageDate: new Date('2010-05-20T06:00:00.000Z'),
-        religiousMarriageDate: new Date('2010-06-12T06:00:00.000Z'),
-        belongsToGroup: true,
-        group: 'Grupo de prueba San Benito',
+        affiliation: '',
+        encounterDate: undefined,
+        civilMarriageDate: undefined,
+        religiousMarriageDate: undefined,
+        belongsToGroup: undefined,
+        group: '',
       },
       groomData: {
-        names: 'Juan Alberto',
-        lastNames: 'Pérez López',
-        birthDate: new Date('1985-02-20T06:00:00.000Z'),
-        dui: '12345678-9',
-        nit: '0101-200285-101-1',
-        occupation: 'Ingeniero de Software',
-        email: 'juan.perez@example.com',
-        cellPhone: '7890-1234',
-        officePhone: '2233-4455',
+        names: '',
+        lastNames: '',
+        birthDate: undefined,
+        dui: '',
+        nit: '',
+        occupation: '',
+        email: '',
+        cellPhone: '',
+        officePhone: '',
       },
       brideData: {
-        names: 'María Elena',
-        lastNames: 'González de Pérez',
-        birthDate: new Date('1987-07-30T06:00:00.000Z'),
-        dui: '87654321-0',
-        nit: '0202-300787-102-2',
-        occupation: 'Doctora',
-        email: 'maria.gonzalez@example.com',
-        cellPhone: '7123-4567',
-        officePhone: '2244-5566',
+        names: '',
+        lastNames: '',
+        birthDate: undefined,
+        dui: '',
+        nit: '',
+        occupation: '',
+        email: '',
+        cellPhone: '',
+        officePhone: '',
       },
       address: {
-        fullAddress: 'Calle La Mascota, #52, Colonia San Benito',
-        municipality: 'San Salvador',
-        department: 'San Salvador',
-        homePhone: '2264-0000',
+        fullAddress: '',
+        municipality: '',
+        department: undefined,
+        homePhone: '',
       },
-      growthLadder: [
-        { name: 'Diálogo', date: new Date('2023-01-10T06:00:00.000Z') },
-        { name: 'Renovación Conyugal', date: new Date('2023-05-22T06:00:00.000Z') },
-      ],
+      growthLadder: [],
       serverRetreats: {
-        Encuentro: [
-          { date: new Date('2023-08-01T06:00:00.000Z'), role: 'Cocinero', comments: 'Mucha comida' }
-        ],
+        Encuentro: [],
         'Fe y Conversión': [],
         'Reencuentro': [],
         'Renovación Conyugal': [],
         'Escuela de Animadores': [],
         'Diálogo': [],
       },
-      secretariats: [
-        { name: 'Secretaría de Finanzas', year: 2023 }
-      ],
-      attendsGeneralAssembly: true,
-      growthGroups: [
-        { groupName: 'Los Peregrinos', startDate: new Date('2023-02-01T06:00:00.000Z'), endDate: new Date('2023-12-01T06:00:00.000Z'), encounter: '125' }
-      ],
-      observations: 'Esta es una observación de prueba para validar el funcionamiento del formulario completo.',
+      secretariats: [],
+      attendsGeneralAssembly: undefined,
+      growthGroups: [],
+      observations: '',
     },
   });
 
@@ -101,10 +91,11 @@ export function FichaMatrimonialForm() {
     try {
       submitToGoogleForm(data);
       toast({
-        title: "✅ URL Generada para prueba",
-        description:
-          "Revisa la consola del navegador para ver el enlace de pre-rellenado y verificarlo.",
+        title: "✅ Formulario preparado",
+        description: "Se ha abierto una nueva pestaña. Por favor, revisa los datos y haz clic en 'Enviar' en esa página para finalizar.",
+        duration: 8000,
       });
+      form.reset();
     } catch (error: any) {
         toast({
             variant: "destructive",

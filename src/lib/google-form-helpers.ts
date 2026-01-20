@@ -98,7 +98,7 @@ function formatGrowthGroups(groups: any[] | undefined): string {
 }
 
 export function submitToGoogleForm(data: FichaMatrimonialData) {
-    const GOOGLE_FORM_VIEW_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSceHliAO4zEK7CdhQwq2oSXls9E_S6PHE10EMOa86nTEhKxsA/viewform';
+    const GOOGLE_FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSceHliAO4zEK7CdhQwq2oSXls9E_S6PHE10EMOa86nTEhKxsA/viewform';
 
     const params = new URLSearchParams();
 
@@ -167,7 +167,7 @@ export function submitToGoogleForm(data: FichaMatrimonialData) {
 
     appendData(fieldMappings.observations, data.observations);
     
-    const fullUrl = `${GOOGLE_FORM_VIEW_URL}?${params.toString()}`;
+    const fullUrl = `${GOOGLE_FORM_URL}?${params.toString()}`;
     
-    console.log('Generated Google Form URL for verification:', fullUrl);
+    window.open(fullUrl, '_blank');
 }
