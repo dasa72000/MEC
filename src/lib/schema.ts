@@ -7,7 +7,7 @@ const yearSchema = z.coerce.number().int().min(1970, "El año debe ser mayor a 1
 const personSchema = z.object({
   names: requiredString,
   lastNames: requiredString,
-  birthDate: z.date({ required_error: "Este campo es requerido." }),
+  birthDate: z.date({ required_error: "Este campo es requerido." }).optional(),
   dui: z.string().optional(),
   nit: z.string().optional(),
   occupation: requiredString,
@@ -78,7 +78,6 @@ export const DEPARTMENTS = [
 
 export const fichaMatrimonialSchema = z.object({
   marriageData: z.object({
-    memberCode: z.string().optional(),
     encounterNumber: requiredString,
     community: requiredString,
     country: z.string().optional(),

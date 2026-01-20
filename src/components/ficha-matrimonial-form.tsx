@@ -32,7 +32,6 @@ export function FichaMatrimonialForm() {
     resolver: zodResolver(fichaMatrimonialSchema),
     defaultValues: {
       marriageData: {
-        memberCode: '',
         encounterNumber: '',
         community: '',
         country: 'El Salvador',

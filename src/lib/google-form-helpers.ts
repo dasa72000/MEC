@@ -5,7 +5,6 @@ import type { FichaMatrimonialData } from './schema';
 
 const fieldMappings = {
   // Datos del Matrimonio
-  memberCode: 'entry.1156990869',
   encounterNumber: 'entry.1583014279',
   community: 'entry.1088149683',
   country: 'entry.791191831',
@@ -109,7 +108,6 @@ export function submitToGoogleForm(data: FichaMatrimonialData) {
         }
     };
 
-    appendData(fieldMappings.memberCode, data.marriageData.memberCode);
     appendData(fieldMappings.encounterNumber, data.marriageData.encounterNumber);
     appendData(fieldMappings.community, data.marriageData.community);
     appendData(fieldMappings.country, data.marriageData.country);
