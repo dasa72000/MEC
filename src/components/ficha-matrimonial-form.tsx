@@ -21,7 +21,6 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import {
   fichaMatrimonialSchema,
@@ -33,6 +32,7 @@ import { SecretariatsSection } from "./sections/secretariats-section";
 import { GrowthGroupsSection } from "./sections/growth-groups-section";
 import { MarriageDetailsSection } from "./sections/marriage-details-section";
 import { GrowthLadderSection } from "./sections/growth-ladder-section";
+import { ObservationsSection } from "./sections/observations-section";
 
 export function FichaMatrimonialForm() {
   const [isLoading, setIsLoading] = useState(false);
@@ -121,31 +121,7 @@ export function FichaMatrimonialForm() {
         <ServerRetreatsSection control={form.control} />
         <SecretariatsSection control={form.control} />
         <GrowthGroupsSection control={form.control} />
-
-        <Card>
-          <CardHeader>
-            <CardTitle>Observaciones</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <FormField
-              control={form.control}
-              name="observations"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Observaciones adicionales</FormLabel>
-                  <FormControl>
-                    <Textarea
-                      placeholder="Escriba cualquier observación o comentario relevante aquí."
-                      className="resize-y min-h-[100px]"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </CardContent>
-        </Card>
+        <ObservationsSection control={form.control} />
 
         <div className="flex justify-end">
           <Button type="submit" disabled={isLoading} size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90">

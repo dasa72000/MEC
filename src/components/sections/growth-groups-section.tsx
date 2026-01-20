@@ -1,24 +1,28 @@
 "use client";
 import type { Control } from "react-hook-form";
 import { useFieldArray } from "react-hook-form";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
   CardHeader,
   CardTitle,
-  CardDescription,
 } from "@/components/ui/card";
 import {
   FormControl,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { DatePicker } from "@/components/ui/date-picker";
-import { PlusCircle, Trash2 } from "lucide-react";
+import { Group, PlusCircle, X } from "lucide-react";
 import type { FichaMatrimonialData } from "@/lib/schema";
 
 interface GrowthGroupsSectionProps {
@@ -33,105 +37,134 @@ export function GrowthGroupsSection({ control }: GrowthGroupsSectionProps) {
 
   return (
     <Card>
-      <CardHeader>
-        <CardTitle>Grupos de Crecimiento</CardTitle>
-        <CardDescription>
-          Registre los grupos de crecimiento que han animado.
-        </CardDescription>
-      </CardHeader>
-      <CardContent className="space-y-6">
-        {fields.map((field, index) => (
-          <div
-            key={field.id}
-            className="p-4 border rounded-lg space-y-4 relative bg-card"
-          >
-            <Button
-              type="button"
-              variant="ghost"
-              size="icon"
-              className="absolute top-2 right-2 text-destructive hover:bg-destructive/10"
-              onClick={() => remove(index)}
-            >
-              <Trash2 className="h-4 w-4" />
-            </Button>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <FormField
-                control={control}
-                name={`growthGroups.${index}.groupName`}
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Nombre del Grupo</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Nombre del grupo" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={control}
-                name={`growthGroups.${index}.encounter`}
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Encuentro</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Encuentro No." {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={control}
-                name={`growthGroups.${index}.startDate`}
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Fecha de Inicio</FormLabel>
-                    <FormControl>
-                      <DatePicker
-                        value={field.value}
-                        onChange={field.onChange}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={control}
-                name={`growthGroups.${index}.endDate`}
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Fecha de Fin</FormLabel>
-                    <FormControl>
-                      <DatePicker
-                        value={field.value}
-                        onChange={field.onChange}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+      <Accordion
+        type="single"
+        collapsible
+        defaultValue="item-1"
+        className="w-full"
+      >
+        <AccordionItem value="item-1" className="border-b-0">
+          <AccordionTrigger className="p-6 hover:no-underline">
+            <div className="flex flex-1 items-center gap-4">
+              <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-lg bg-primary text-primary-foreground">
+                <Group className="h-6 w-6" />
+              </div>
+              <div className="text-left">
+                <h3 className="text-lg font-semibold">Grupos de Crecimiento</h3>
+                <p className="text-sm text-muted-foreground">
+                  Grupos que han animado
+                </p>
+              </div>
             </div>
-          </div>
-        ))}
-        <Button
-          type="button"
-          variant="outline"
-          onClick={() =>
-            append({
-              groupName: "",
-              encounter: "",
-              startDate: new Date(),
-              endDate: new Date(),
-            })
-          }
-        >
-          <PlusCircle className="mr-2 h-4 w-4" />
-          Agregar Grupo
-        </Button>
-      </CardContent>
+          </AccordionTrigger>
+          <AccordionContent>
+            <CardContent className="pt-0">
+              <Card className="bg-card shadow-inner">
+                <CardHeader>
+                  <CardTitle className="text-base font-medium">
+                    Grupos de Crecimiento que han Animado
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="space-y-4">
+                    {fields.map((field, index) => (
+                      <div
+                        key={field.id}
+                        className="grid grid-cols-1 md:grid-cols-[2fr,1fr,1fr,1fr,auto] gap-2 items-start"
+                      >
+                        <FormField
+                          control={control}
+                          name={`growthGroups.${index}.groupName`}
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormControl>
+                                <Input
+                                  placeholder="Nombre del grupo"
+                                  {...field}
+                                />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                        <FormField
+                          control={control}
+                          name={`growthGroups.${index}.startDate`}
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormControl>
+                                <DatePicker
+                                  value={field.value}
+                                  onChange={field.onChange}
+                                  placeholder="Desde"
+                                />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                        <FormField
+                          control={control}
+                          name={`growthGroups.${index}.endDate`}
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormControl>
+                                <DatePicker
+                                  value={field.value}
+                                  onChange={field.onChange}
+                                  placeholder="Hasta"
+                                />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                        <FormField
+                          control={control}
+                          name={`growthGroups.${index}.encounter`}
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormControl>
+                                <Input placeholder="Enc. No." {...field} />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                        <Button
+                          type="button"
+                          variant="ghost"
+                          size="icon"
+                          className="text-destructive hover:bg-destructive/10"
+                          onClick={() => remove(index)}
+                        >
+                          <X className="h-4 w-4" />
+                        </Button>
+                      </div>
+                    ))}
+                  </div>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    className="w-full border-dashed"
+                    onClick={() =>
+                      append({
+                        groupName: "",
+                        encounter: "",
+                        startDate: undefined,
+                        endDate: undefined,
+                      })
+                    }
+                  >
+                    <PlusCircle className="mr-2 h-4 w-4" />
+                    Agregar grupo
+                  </Button>
+                </CardContent>
+              </Card>
+            </CardContent>
+          </AccordionContent>
+        </AccordionItem>
+      </Accordion>
     </Card>
   );
 }
