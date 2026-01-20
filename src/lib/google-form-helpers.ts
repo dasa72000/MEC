@@ -1,7 +1,7 @@
 "use client";
 
 import { format } from 'date-fns';
-import type { FichaMatrimonialData, GrowthLadderStep, RetreatType } from './schema';
+import type { FichaMatrimonialData } from './schema';
 
 // =====================================================================================
 // == PASO 1: Reemplaza los IDs de placeholder con los IDs de tu Google Form.         ==
@@ -10,73 +10,73 @@ import type { FichaMatrimonialData, GrowthLadderStep, RetreatType } from './sche
 // el ID de "entry.xxxxxxxx" que corresponde a cada campo.
 const fieldMappings = {
   // Datos del Matrimonio
-  memberCode: 'entry.0000000001',
-  encounterNumber: 'entry.0000000002',
-  community: 'entry.0000000003',
-  country: 'entry.0000000004',
-  affiliation: 'entry.0000000005',
-  correlative: 'entry.0000000006',
-  encounterYear: 'entry.0000000007',
-  civilMarriageDate: 'entry.0000000008',
-  religiousMarriageDate: 'entry.0000000009',
-  belongsToGroup: 'entry.0000000010',
-  group: 'entry.0000000011',
+  memberCode: 'entry.1156990869',
+  encounterNumber: 'entry.1583014279',
+  community: 'entry.1088149683',
+  country: 'entry.791191831',
+  affiliation: 'entry.553504835',
+  correlative: 'entry.301217874',
+  encounterYear: 'entry.1308011902',
+  civilMarriageDate: 'entry.1705889295',
+  religiousMarriageDate: 'entry.2019193873',
+  belongsToGroup: 'entry.1168466126',
+  group: 'entry.438479411',
 
   // Datos Personales (Él)
-  groomNames: 'entry.0000000012',
-  groomLastNames: 'entry.0000000013',
-  groomBirthDate: 'entry.0000000014',
-  groomDui: 'entry.0000000015',
-  groomNit: 'entry.0000000016',
-  groomOccupation: 'entry.0000000017',
-  groomEmail: 'entry.0000000018',
-  groomCellPhone: 'entry.0000000019',
-  groomOfficePhone: 'entry.0000000020',
+  groomNames: 'entry.1226284909',
+  groomLastNames: 'entry.1475879770',
+  groomBirthDate: 'entry.138200667',
+  groomDui: 'entry.192079651',
+  groomNit: 'entry.447242304',
+  groomOccupation: 'entry.1694910302',
+  groomEmail: 'entry.762826639',
+  groomCellPhone: 'entry.865727457',
+  groomOfficePhone: 'entry.617110316',
 
   // Datos Personales (Ella)
-  brideNames: 'entry.0000000021',
-  brideLastNames: 'entry.0000000022',
-  brideBirthDate: 'entry.0000000023',
-  brideDui: 'entry.0000000024',
-  brideNit: 'entry.0000000025',
-  brideOccupation: 'entry.0000000026',
-  brideEmail: 'entry.0000000027',
-  brideCellPhone: 'entry.0000000028',
-  brideOfficePhone: 'entry.0000000029',
+  brideNames: 'entry.864169649',
+  brideLastNames: 'entry.268050510',
+  brideBirthDate: 'entry.916118613',
+  brideDui: 'entry.880115904',
+  brideNit: 'entry.1900352598',
+  brideOccupation: 'entry.1128913595',
+  brideEmail: 'entry.1540070540',
+  brideCellPhone: 'entry.1344314415',
+  brideOfficePhone: 'entry.93459105',
 
   // Dirección
-  fullAddress: 'entry.0000000030',
-  municipality: 'entry.0000000031',
-  department: 'entry.0000000032',
-  homePhone: 'entry.0000000033',
+  fullAddress: 'entry.1241868238',
+  municipality: 'entry.1169903313',
+  department: 'entry.1520416446',
+  homePhone: 'entry.1084534512',
 
   // Escalera de Crecimiento
-  growthLadderDialogo: 'entry.0000000034',
-  growthLadderRenovacion: 'entry.0000000035',
-  growthLadderFeYConversion: 'entry.0000000036',
-  growthLadderEscuela: 'entry.0000000037',
-  growthLadderPastoreo: 'entry.0000000038',
-  growthLadderReencuentro: 'entry.0000000039',
-  growthLadderConvivencia: 'entry.0000000040',
-  growthLadderMesa: 'entry.0000000041',
+  growthLadderDialogo: 'entry.831348012',
+  growthLadderRenovacion: 'entry.1057522194',
+  growthLadderFeYConversion: 'entry.185377418',
+  growthLadderEscuela: 'entry.1144574340',
+  growthLadderPastoreo: 'entry.721247053',
+  growthLadderReencuentro: 'entry.1145015679',
+  growthLadderConvivencia: 'entry.1502870648',
+  growthLadderMesa: 'entry.977902280',
 
   // Retiros como Servidores
-  serverRetreatsEncuentro: 'entry.0000000042',
-  serverRetreatsDialogo: 'entry.0000000043',
-  serverRetreatsFeYConversion: 'entry.0000000044',
-  serverRetreatsReencuentro: 'entry.0000000045',
-  serverRetreatsRenovacion: 'entry.0000000046',
-  serverRetreatsEscuela: 'entry.0000000047',
+  serverRetreatsEncuentro: 'entry.14539237',
+  serverRetreatsDialogo: 'entry.943970582',
+  serverRetreatsFeYConversion: 'entry.1976107671',
+  serverRetreatsReencuentro: 'entry.1212632899',
+  serverRetreatsRenovacion: 'entry.94533679',
+  serverRetreatsEscuela: 'entry.1825921011',
   
   // Secretarías y Asamblea
-  secretariats: 'entry.0000000048',
-  attendsGeneralAssembly: 'entry.0000000049',
+  secretariats: 'entry.1828306218',
+  attendsGeneralAssembly: 'entry.1892421715',
 
   // Grupos de Crecimiento
-  growthGroups: 'entry.0000000050',
+  growthGroups: 'entry.1164913253',
 
   // Observaciones
-  observations: 'entry.0000000051',
+  observations: 'entry.756144804',
 };
 
 
@@ -167,7 +167,7 @@ export async function submitToGoogleForm(data: FichaMatrimonialData) {
     // =====================================================================================
     // == PASO 2: Reemplaza esta URL con la URL de acción de tu Google Form.             ==
     // =====================================================================================
-    const GOOGLE_FORM_ACTION_URL = 'https://docs.google.com/forms/d/e/YOUR_FORM_ID/formResponse';
+    const GOOGLE_FORM_ACTION_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSceHliAO4zEK7CdhQwq2oSXls9E_S6PHE10EMOa86nTEhKxsA/formResponse';
     
     try {
         await fetch(GOOGLE_FORM_ACTION_URL, {
