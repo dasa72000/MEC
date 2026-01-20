@@ -1,13 +1,14 @@
 "use client"
 
 import * as React from "react"
-import { format } from "date-fns"
+import { format, parse, isValid } from "date-fns"
 import { es } from "date-fns/locale"
 import { Calendar as CalendarIcon } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Calendar } from "@/components/ui/calendar"
+import { Input } from "@/components/ui/input"
 import {
   Popover,
   PopoverContent,
@@ -21,34 +22,73 @@ type DatePickerProps = {
   placeholder?: string
 }
 
-export function DatePicker({ value, onChange, className, placeholder = "Selecciona una fecha" }: DatePickerProps) {
+export function DatePicker({ value, onChange, className, placeholder = "dd/mm/yyyy" }: DatePickerProps) {
+  const [inputValue, setInputValue] = React.useState<string>("");
+  const [popoverOpen, setPopoverOpen] = React.useState(false);
+  const dateFormat = "dd/MM/yyyy";
+
+  React.useEffect(() => {
+    if (value && isValid(value)) {
+      setInputValue(format(value, dateFormat));
+    } else {
+      setInputValue("");
+    }
+  }, [value]);
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue(e.target.value);
+  };
+
+  const handleInputBlur = () => {
+    const parsedDate = parse(inputValue, dateFormat, new Date());
+    if (isValid(parsedDate)) {
+      if (!value || value.getTime() !== parsedDate.getTime()) {
+        onChange(parsedDate);
+      }
+    } else {
+      if (value) {
+        onChange(undefined);
+      }
+    }
+  };
+
+  const handleCalendarSelect = (selectedDate: Date | undefined) => {
+    onChange(selectedDate);
+    if (selectedDate && isValid(selectedDate)) {
+      setInputValue(format(selectedDate, dateFormat));
+    }
+    setPopoverOpen(false);
+  };
+
   return (
-    <Popover>
-      <PopoverTrigger asChild>
-        <Button
-          variant={"outline"}
-          className={cn(
-            "w-full justify-start text-left font-normal",
-            !value && "text-muted-foreground",
-            className
-          )}
-        >
-          <CalendarIcon className="mr-2 h-4 w-4" />
-          {value ? format(value, "PPP", { locale: es }) : <span>{placeholder}</span>}
-        </Button>
-      </PopoverTrigger>
+    <Popover open={popoverOpen} onOpenChange={setPopoverOpen}>
+      <div className="relative flex items-center">
+        <Input
+          type="text"
+          className={cn("w-full pr-10 justify-start text-left font-normal", className)}
+          value={inputValue}
+          onChange={handleInputChange}
+          onBlur={handleInputBlur}
+          placeholder={placeholder}
+        />
+        <PopoverTrigger asChild>
+          <Button variant={"ghost"} className="absolute right-0 h-full p-2 text-muted-foreground hover:text-foreground">
+            <CalendarIcon className="h-4 w-4" />
+          </Button>
+        </PopoverTrigger>
+      </div>
       <PopoverContent className="w-auto p-0">
         <Calendar
           mode="single"
           selected={value}
-          onSelect={onChange}
+          onSelect={handleCalendarSelect}
           initialFocus
           locale={es}
           captionLayout="dropdown-buttons"
-          fromYear={1970}
-          toYear={2035}
+          fromYear={1920}
+          toYear={new Date().getFullYear() + 10}
         />
       </PopoverContent>
     </Popover>
-  )
+  );
 }
