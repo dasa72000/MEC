@@ -39,15 +39,15 @@ export function FichaMatrimonialForm() {
         affiliation: 'AS',
         correlative: '0082',
         encounterYear: '2007',
-        civilMarriageDate: new Date('2000-05-20T00:00:00'),
-        religiousMarriageDate: new Date('2000-05-28T00:00:00'),
+        civilMarriageDate: new Date('2000-05-20T00:00:00Z'),
+        religiousMarriageDate: new Date('2000-05-28T00:00:00Z'),
         belongsToGroup: true,
         group: 'Grupo de Oración San Pío',
       },
       groomData: {
         names: 'Juan Alberto',
         lastNames: 'Pérez López',
-        birthDate: new Date('1975-03-15T00:00:00'),
+        birthDate: new Date('1975-03-15T00:00:00Z'),
         dui: '12345678-9',
         nit: '1234-567890-123-4',
         occupation: 'Ingeniero de Software',
@@ -58,7 +58,7 @@ export function FichaMatrimonialForm() {
       brideData: {
         names: 'María Elena',
         lastNames: 'García de Pérez',
-        birthDate: new Date('1978-08-22T00:00:00'),
+        birthDate: new Date('1978-08-22T00:00:00Z'),
         dui: '98765432-1',
         nit: '4321-098765-321-0',
         occupation: 'Doctora',
@@ -73,34 +73,33 @@ export function FichaMatrimonialForm() {
         homePhone: '2525-2525',
       },
       growthLadder: [
-        { name: 'Diálogo', date: new Date('2008-02-10T00:00:00') },
-        { name: 'Renovación Conyugal', date: new Date('2010-06-15T00:00:00') },
+        { name: 'Diálogo', date: new Date('2008-02-10T00:00:00Z') },
+        { name: 'Renovación Conyugal', date: new Date('2010-06-15T00:00:00Z') },
       ],
       serverRetreats: {
-          Encuentro: [{ date: new Date('2012-11-20T00:00:00'), role: 'Coordinador', comments: 'Excelente experiencia' }]
+          Encuentro: [{ date: new Date('2012-11-20T00:00:00Z'), role: 'Coordinador', comments: 'Excelente experiencia' }]
       },
       secretariats: [{ name: 'Secretaría de Finanzas', year: 2015 }],
       attendsGeneralAssembly: true,
-      growthGroups: [{ groupName: 'Grupo #15', startDate: new Date('2018-01-15T00:00:00'), endDate: new Date('2019-01-15T00:00:00'), encounter: '55' }],
+      growthGroups: [{ groupName: 'Grupo #15', startDate: new Date('2018-01-15T00:00:00Z'), endDate: new Date('2019-01-15T00:00:00Z'), encounter: '55' }],
       observations: 'Esta es una prueba de envío de datos completos desde la aplicación.',
     },
   });
 
-  async function onSubmit(data: FichaMatrimonialData) {
+  function onSubmit(data: FichaMatrimonialData) {
     setIsLoading(true);
     try {
-      await submitToGoogleForm(data);
+      submitToGoogleForm(data);
       toast({
-        title: "✅ Formulario Enviado",
+        title: "✅ URL de depuración generada",
         description:
-          "Gracias. Todos los datos han sido guardados correctamente.",
+          "Se ha abierto una nueva pestaña con el formulario pre-llenado. Revíselo.",
       });
-      form.reset(); 
     } catch (error: any) {
         toast({
             variant: "destructive",
-            title: "❌ Error al enviar",
-            description: error.message || "No se pudo guardar el formulario. Por favor, intente de nuevo.",
+            title: "❌ Error al generar URL",
+            description: error.message || "No se pudo generar la URL de depuración.",
         });
     } finally {
         setIsLoading(false);

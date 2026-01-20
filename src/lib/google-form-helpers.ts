@@ -76,44 +76,51 @@ const fieldMappings = {
 
 
 function formatDate(date: Date | undefined): string {
-    return date ? format(date, 'yyyy-MM-dd') : '';
+    if (!date) return '';
+    // Format to YYYY-MM-DD, crucial for Google Forms date fields
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
 }
 
 function formatServerRetreats(retreats: any[] | undefined): string {
     if (!retreats || retreats.length === 0) return 'No aplica.';
-    return retreats.map(r => `Fecha: ${formatDate(r.date)}, Rol: ${r.role}, Comentarios: ${r.comments || 'N/A'}`).join('\n');
+    return retreats.map(r => `Fecha: ${formatDate(r.date)}, Rol: ${r.role || 'N/A'}, Comentarios: ${r.comments || 'N/A'}`).join('\n');
 }
 
 function formatSecretariats(secretariats: any[] | undefined): string {
     if (!secretariats || secretariats.length === 0) return 'No aplica.';
-    return secretariats.map(s => `Secretaría: ${s.name}, Año: ${s.year}`).join('\n');
+    return secretariats.map(s => `Secretaría: ${s.name || 'N/A'}, Año: ${s.year || 'N/A'}`).join('\n');
 }
 
 function formatGrowthGroups(groups: any[] | undefined): string {
     if (!groups || groups.length === 0) return 'No aplica.';
-    return groups.map(g => `Grupo: ${g.groupName}, Desde: ${formatDate(g.startDate)}, Hasta: ${formatDate(g.endDate)}, Enc. No.: ${g.encounter}`).join('\n');
+    return groups.map(g => `Grupo: ${g.groupName || 'N/A'}, Desde: ${formatDate(g.startDate)}, Hasta: ${formatDate(g.endDate)}, Enc. No.: ${g.encounter || 'N/A'}`).join('\n');
 }
 
-export async function submitToGoogleForm(data: FichaMatrimonialData) {
-    const GOOGLE_FORM_ACTION_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSceHliAO4zEK7CdhQwq2oSXls9E_S6PHE10EMOa86nTEhKxsA/formResponse';
+export function submitToGoogleForm(data: FichaMatrimonialData) {
+    const GOOGLE_FORM_VIEW_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSceHliAO4zEK7CdhQwq2oSXls9E_S6PHE10EMOa86nTEhKxsA/viewform';
 
-    const formData = new FormData();
+    const params = new URLSearchParams();
 
-    const appendData = (key: string, value: string) => {
-        formData.append(key, value);
+    const appendData = (key: string, value: string | undefined | null) => {
+        if (value) {
+            params.append(key, value);
+        }
     };
 
-    appendData(fieldMappings.memberCode, data.marriageData.memberCode || '');
+    appendData(fieldMappings.memberCode, data.marriageData.memberCode);
     appendData(fieldMappings.encounterNumber, data.marriageData.encounterNumber);
     appendData(fieldMappings.community, data.marriageData.community);
-    appendData(fieldMappings.country, data.marriageData.country || '');
-    appendData(fieldMappings.affiliation, data.marriageData.affiliation || '');
-    appendData(fieldMappings.correlative, data.marriageData.correlative || '');
-    appendData(fieldMappings.encounterYear, data.marriageData.encounterYear || '');
+    appendData(fieldMappings.country, data.marriageData.country);
+    appendData(fieldMappings.affiliation, data.marriageData.affiliation);
+    appendData(fieldMappings.correlative, data.marriageData.correlative);
+    appendData(fieldMappings.encounterYear, data.marriageData.encounterYear);
     appendData(fieldMappings.civilMarriageDate, formatDate(data.marriageData.civilMarriageDate));
     appendData(fieldMappings.religiousMarriageDate, formatDate(data.marriageData.religiousMarriageDate));
     appendData(fieldMappings.belongsToGroup, data.marriageData.belongsToGroup ? 'Sí' : 'No');
-    appendData(fieldMappings.group, data.marriageData.group || '');
+    appendData(fieldMappings.group, data.marriageData.group);
 
     appendData(fieldMappings.groomNames, data.groomData.names);
     appendData(fieldMappings.groomLastNames, data.groomData.lastNames);
@@ -162,16 +169,10 @@ export async function submitToGoogleForm(data: FichaMatrimonialData) {
 
     appendData(fieldMappings.growthGroups, formatGrowthGroups(data.growthGroups));
 
-    appendData(fieldMappings.observations, data.observations || 'Sin observaciones.');
+    appendData(fieldMappings.observations, data.observations);
     
-    try {
-        await fetch(GOOGLE_FORM_ACTION_URL, {
-            method: 'POST',
-            body: formData,
-            mode: 'no-cors',
-        });
-    } catch (error) {
-        console.error('Error submitting to Google Form:', error);
-        throw new Error('No se pudo enviar el formulario. Por favor, intente de nuevo.');
-    }
+    const fullUrl = `${GOOGLE_FORM_VIEW_URL}?${params.toString()}`;
+    
+    console.log("Generated Google Form URL:", fullUrl);
+    window.open(fullUrl, '_blank');
 }
