@@ -8,12 +8,12 @@ const personSchema = z.object({
   names: requiredString,
   lastNames: requiredString,
   birthDate: z.date({ required_error: "Este campo es requerido." }),
-  dui: requiredString,
-  nit: requiredString,
+  dui: z.string().optional(),
+  nit: z.string().optional(),
   occupation: requiredString,
   email: requiredString.email("Email inválido."),
   cellPhone: requiredString,
-  officePhone: requiredString,
+  officePhone: z.string().optional(),
 });
 
 export const RETREAT_TYPES = [
