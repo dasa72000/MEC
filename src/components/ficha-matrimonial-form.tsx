@@ -22,6 +22,7 @@ import { MarriageDetailsSection } from "./sections/marriage-details-section";
 import { GrowthLadderSection } from "./sections/growth-ladder-section";
 import { ObservationsSection } from "./sections/observations-section";
 import { AddressSection } from "./sections/address-section";
+import { submitToGoogleForm } from "@/lib/google-form-helpers";
 
 export function FichaMatrimonialForm() {
   const [isLoading, setIsLoading] = useState(false);
@@ -80,15 +81,23 @@ export function FichaMatrimonialForm() {
 
   async function onSubmit(data: FichaMatrimonialData) {
     setIsLoading(true);
-    // Here you would typically send the data to your backend
-    console.log("Form data submitted:", data);
-    await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate network request
-    toast({
-      title: "✅ Formulario Guardado",
-      description:
-        "Todos los datos han sido guardados correctamente.",
-    });
-    setIsLoading(false);
+    try {
+      await submitToGoogleForm(data);
+      toast({
+        title: "✅ Formulario Enviado",
+        description:
+          "Gracias. Todos los datos han sido guardados correctamente.",
+      });
+      form.reset(); // Opcional: limpiar el formulario después de un envío exitoso
+    } catch (error: any) {
+        toast({
+            variant: "destructive",
+            title: "❌ Error al enviar",
+            description: error.message || "No se pudo guardar el formulario. Por favor, intente de nuevo.",
+        });
+    } finally {
+        setIsLoading(false);
+    }
   }
 
   return (
