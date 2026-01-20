@@ -94,72 +94,83 @@ function formatGrowthGroups(groups: any[] | undefined): string {
     return groups.map(g => `Grupo: ${g.groupName}, Desde: ${formatDate(g.startDate)}, Hasta: ${formatDate(g.endDate)}, Enc. No.: ${g.encounter}`).join('\n');
 }
 
-
 export async function submitToGoogleForm(data: FichaMatrimonialData) {
+    const GOOGLE_FORM_VIEW_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSceHliAO4zEK7CdhQwq2oSXls9E_S6PHE10EMOa86nTEhKxsA/viewform';
+    const GOOGLE_FORM_ACTION_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSceHliAO4zEK7CdhQwq2oSXls9E_S6PHE10EMOa86nTEhKxsA/formResponse';
+
     const formData = new FormData();
+    const debugParams = new URLSearchParams();
 
-    formData.append(fieldMappings.memberCode, data.marriageData.memberCode || '');
-    formData.append(fieldMappings.encounterNumber, data.marriageData.encounterNumber);
-    formData.append(fieldMappings.community, data.marriageData.community);
-    formData.append(fieldMappings.country, data.marriageData.country || '');
-    formData.append(fieldMappings.affiliation, data.marriageData.affiliation || '');
-    formData.append(fieldMappings.correlative, data.marriageData.correlative || '');
-    formData.append(fieldMappings.encounterYear, data.marriageData.encounterYear || '');
-    formData.append(fieldMappings.civilMarriageDate, formatDate(data.marriageData.civilMarriageDate));
-    formData.append(fieldMappings.religiousMarriageDate, formatDate(data.marriageData.religiousMarriageDate));
-    formData.append(fieldMappings.belongsToGroup, data.marriageData.belongsToGroup ? 'Sí' : 'No');
-    formData.append(fieldMappings.group, data.marriageData.group || '');
+    const appendData = (key: string, value: string) => {
+        formData.append(key, value);
+        debugParams.append(key, value);
+    };
 
-    formData.append(fieldMappings.groomNames, data.groomData.names);
-    formData.append(fieldMappings.groomLastNames, data.groomData.lastNames);
-    formData.append(fieldMappings.groomBirthDate, formatDate(data.groomData.birthDate));
-    formData.append(fieldMappings.groomDui, data.groomData.dui);
-    formData.append(fieldMappings.groomNit, data.groomData.nit);
-    formData.append(fieldMappings.groomOccupation, data.groomData.occupation);
-    formData.append(fieldMappings.groomEmail, data.groomData.email);
-    formData.append(fieldMappings.groomCellPhone, data.groomData.cellPhone);
-    formData.append(fieldMappings.groomOfficePhone, data.groomData.officePhone);
+    appendData(fieldMappings.memberCode, data.marriageData.memberCode || '');
+    appendData(fieldMappings.encounterNumber, data.marriageData.encounterNumber);
+    appendData(fieldMappings.community, data.marriageData.community);
+    appendData(fieldMappings.country, data.marriageData.country || '');
+    appendData(fieldMappings.affiliation, data.marriageData.affiliation || '');
+    appendData(fieldMappings.correlative, data.marriageData.correlative || '');
+    appendData(fieldMappings.encounterYear, data.marriageData.encounterYear || '');
+    appendData(fieldMappings.civilMarriageDate, formatDate(data.marriageData.civilMarriageDate));
+    appendData(fieldMappings.religiousMarriageDate, formatDate(data.marriageData.religiousMarriageDate));
+    appendData(fieldMappings.belongsToGroup, data.marriageData.belongsToGroup ? 'Sí' : 'No');
+    appendData(fieldMappings.group, data.marriageData.group || '');
 
-    formData.append(fieldMappings.brideNames, data.brideData.names);
-    formData.append(fieldMappings.brideLastNames, data.brideData.lastNames);
-    formData.append(fieldMappings.brideBirthDate, formatDate(data.brideData.birthDate));
-    formData.append(fieldMappings.brideDui, data.brideData.dui);
-    formData.append(fieldMappings.brideNit, data.brideData.nit);
-    formData.append(fieldMappings.brideOccupation, data.brideData.occupation);
-    formData.append(fieldMappings.brideEmail, data.brideData.email);
-    formData.append(fieldMappings.brideCellPhone, data.brideData.cellPhone);
-    formData.append(fieldMappings.brideOfficePhone, data.brideData.officePhone);
+    appendData(fieldMappings.groomNames, data.groomData.names);
+    appendData(fieldMappings.groomLastNames, data.groomData.lastNames);
+    appendData(fieldMappings.groomBirthDate, formatDate(data.groomData.birthDate));
+    appendData(fieldMappings.groomDui, data.groomData.dui);
+    appendData(fieldMappings.groomNit, data.groomData.nit);
+    appendData(fieldMappings.groomOccupation, data.groomData.occupation);
+    appendData(fieldMappings.groomEmail, data.groomData.email);
+    appendData(fieldMappings.groomCellPhone, data.groomData.cellPhone);
+    appendData(fieldMappings.groomOfficePhone, data.groomData.officePhone);
 
-    formData.append(fieldMappings.fullAddress, data.address.fullAddress);
-    formData.append(fieldMappings.municipality, data.address.municipality);
-    formData.append(fieldMappings.department, data.address.department);
-    formData.append(fieldMappings.homePhone, data.address.homePhone);
+    appendData(fieldMappings.brideNames, data.brideData.names);
+    appendData(fieldMappings.brideLastNames, data.brideData.lastNames);
+    appendData(fieldMappings.brideBirthDate, formatDate(data.brideData.birthDate));
+    appendData(fieldMappings.brideDui, data.brideData.dui);
+    appendData(fieldMappings.brideNit, data.brideData.nit);
+    appendData(fieldMappings.brideOccupation, data.brideData.occupation);
+    appendData(fieldMappings.brideEmail, data.brideData.email);
+    appendData(fieldMappings.brideCellPhone, data.brideData.cellPhone);
+    appendData(fieldMappings.brideOfficePhone, data.brideData.officePhone);
+
+    appendData(fieldMappings.fullAddress, data.address.fullAddress);
+    appendData(fieldMappings.municipality, data.address.municipality);
+    appendData(fieldMappings.department, data.address.department);
+    appendData(fieldMappings.homePhone, data.address.homePhone);
 
     const growthLadderMap = new Map(data.growthLadder.map(item => [item.name, item.date]));
-    formData.append(fieldMappings.growthLadderDialogo, formatDate(growthLadderMap.get('Diálogo')));
-    formData.append(fieldMappings.growthLadderRenovacion, formatDate(growthLadderMap.get('Renovación Conyugal')));
-    formData.append(fieldMappings.growthLadderFeYConversion, formatDate(growthLadderMap.get('Fe y Conversión')));
-    formData.append(fieldMappings.growthLadderEscuela, formatDate(growthLadderMap.get('Escuela de Animadores')));
-    formData.append(fieldMappings.growthLadderPastoreo, formatDate(growthLadderMap.get('Pastoreo')));
-    formData.append(fieldMappings.growthLadderReencuentro, formatDate(growthLadderMap.get('Reencuentro')));
-    formData.append(fieldMappings.growthLadderConvivencia, formatDate(growthLadderMap.get('Convivencia Familiar')));
-    formData.append(fieldMappings.growthLadderMesa, formatDate(growthLadderMap.get('Alrededor de la Mesa')));
+    appendData(fieldMappings.growthLadderDialogo, formatDate(growthLadderMap.get('Diálogo')));
+    appendData(fieldMappings.growthLadderRenovacion, formatDate(growthLadderMap.get('Renovación Conyugal')));
+    appendData(fieldMappings.growthLadderFeYConversion, formatDate(growthLadderMap.get('Fe y Conversión')));
+    appendData(fieldMappings.growthLadderEscuela, formatDate(growthLadderMap.get('Escuela de Animadores')));
+    appendData(fieldMappings.growthLadderPastoreo, formatDate(growthLadderMap.get('Pastoreo')));
+    appendData(fieldMappings.growthLadderReencuentro, formatDate(growthLadderMap.get('Reencuentro')));
+    appendData(fieldMappings.growthLadderConvivencia, formatDate(growthLadderMap.get('Convivencia Familiar')));
+    appendData(fieldMappings.growthLadderMesa, formatDate(growthLadderMap.get('Alrededor de la Mesa')));
 
-    formData.append(fieldMappings.serverRetreatsEncuentro, formatServerRetreats(data.serverRetreats.Encuentro));
-    formData.append(fieldMappings.serverRetreatsDialogo, formatServerRetreats(data.serverRetreats.Diálogo));
-    formData.append(fieldMappings.serverRetreatsFeYConversion, formatServerRetreats(data.serverRetreats['Fe y Conversión']));
-    formData.append(fieldMappings.serverRetreatsReencuentro, formatServerRetreats(data.serverRetreats.Reencuentro));
-    formData.append(fieldMappings.serverRetreatsRenovacion, formatServerRetreats(data.serverRetreats['Renovación Conyugal']));
-    formData.append(fieldMappings.serverRetreatsEscuela, formatServerRetreats(data.serverRetreats['Escuela de Animadores']));
+    appendData(fieldMappings.serverRetreatsEncuentro, formatServerRetreats(data.serverRetreats.Encuentro));
+    appendData(fieldMappings.serverRetreatsDialogo, formatServerRetreats(data.serverRetreats.Diálogo));
+    appendData(fieldMappings.serverRetreatsFeYConversion, formatServerRetreats(data.serverRetreats['Fe y Conversión']));
+    appendData(fieldMappings.serverRetreatsReencuentro, formatServerRetreats(data.serverRetreats.Reencuentro));
+    appendData(fieldMappings.serverRetreatsRenovacion, formatServerRetreats(data.serverRetreats['Renovación Conyugal']));
+    appendData(fieldMappings.serverRetreatsEscuela, formatServerRetreats(data.serverRetreats['Escuela de Animadores']));
     
-    formData.append(fieldMappings.secretariats, formatSecretariats(data.secretariats));
-    formData.append(fieldMappings.attendsGeneralAssembly, data.attendsGeneralAssembly ? 'Sí' : 'No');
+    appendData(fieldMappings.secretariats, formatSecretariats(data.secretariats));
+    appendData(fieldMappings.attendsGeneralAssembly, data.attendsGeneralAssembly ? 'Sí' : 'No');
 
-    formData.append(fieldMappings.growthGroups, formatGrowthGroups(data.growthGroups));
+    appendData(fieldMappings.growthGroups, formatGrowthGroups(data.growthGroups));
 
-    formData.append(fieldMappings.observations, data.observations || 'Sin observaciones.');
+    appendData(fieldMappings.observations, data.observations || 'Sin observaciones.');
     
-    const GOOGLE_FORM_ACTION_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSceHliAO4zEK7CdhQwq2oSXls9E_S6PHE10EMOa86nTEhKxsA/formResponse';
+    const debugUrl = `${GOOGLE_FORM_VIEW_URL}?${debugParams.toString()}`;
+    console.log('--- PRUEBA DE DEBUG ---');
+    console.log('Copia y pega la siguiente URL en tu navegador para ver si los datos se cargan en el formulario de Google. Si algunos campos están vacíos, los IDs han cambiado y necesitamos un nuevo enlace de pre-rellenado.');
+    console.log(debugUrl);
     
     try {
         await fetch(GOOGLE_FORM_ACTION_URL, {

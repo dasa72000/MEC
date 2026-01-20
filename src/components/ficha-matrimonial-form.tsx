@@ -41,13 +41,13 @@ export function FichaMatrimonialForm() {
         encounterYear: "2010",
         belongsToGroup: true,
         group: "Grupo de la Esperanza",
-        civilMarriageDate: new Date("2000-05-20T12:00:00"),
-        religiousMarriageDate: new Date("2000-06-15T12:00:00"),
+        civilMarriageDate: new Date("2000-05-20T00:00:00-06:00"),
+        religiousMarriageDate: new Date("2000-06-15T00:00:00-06:00"),
       },
       groomData: {
         names: "Juan José (Prueba)",
         lastNames: "Pérez Gómez",
-        birthDate: new Date("1975-03-10T12:00:00"),
+        birthDate: new Date("1975-03-10T00:00:00-06:00"),
         dui: "01234567-8",
         nit: "0101-100375-101-9",
         occupation: "Ingeniero de Software",
@@ -58,7 +58,7 @@ export function FichaMatrimonialForm() {
       brideData: {
         names: "María Elena (Prueba)",
         lastNames: "López de Pérez",
-        birthDate: new Date("1978-08-25T12:00:00"),
+        birthDate: new Date("1978-08-25T00:00:00-06:00"),
         dui: "09876543-2",
         nit: "0101-250878-102-1",
         occupation: "Doctora en Medicina",
@@ -73,13 +73,13 @@ export function FichaMatrimonialForm() {
         homePhone: "2211-2233",
       },
       growthLadder: [
-        { name: "Diálogo", date: new Date("2011-02-15T12:00:00") },
-        { name: "Renovación Conyugal", date: new Date("2012-07-20T12:00:00") },
-        { name: "Fe y Conversión", date: new Date("2013-03-10T12:00:00") },
+        { name: "Diálogo", date: new Date("2011-02-15T00:00:00-06:00") },
+        { name: "Renovación Conyugal", date: new Date("2012-07-20T00:00:00-06:00") },
+        { name: "Fe y Conversión", date: new Date("2013-03-10T00:00:00-06:00") },
       ],
       serverRetreats: {
         Encuentro: [
-          { date: new Date("2015-11-10T12:00:00"), role: "Coordinadores", comments: "Encuentro #180" }
+          { date: new Date("2015-11-10T00:00:00-06:00"), role: "Coordinadores", comments: "Encuentro #180" }
         ],
         Diálogo: [],
         "Fe y Conversión": [],
@@ -95,8 +95,8 @@ export function FichaMatrimonialForm() {
       growthGroups: [
           {
               groupName: "Los Peregrinos",
-              startDate: new Date("2013-01-15T12:00:00"),
-              endDate: new Date("2015-12-20T12:00:00"),
+              startDate: new Date("2013-01-15T00:00:00-06:00"),
+              endDate: new Date("2015-12-20T00:00:00-06:00"),
               encounter: "165",
           }
       ],
@@ -113,7 +113,8 @@ export function FichaMatrimonialForm() {
         description:
           "Gracias. Todos los datos han sido guardados correctamente.",
       });
-      form.reset();
+      // No resetear el formulario en modo de prueba
+      // form.reset(); 
     } catch (error: any) {
         toast({
             variant: "destructive",
