@@ -196,7 +196,7 @@ export function MarriageDetailsSection({ control }: MarriageDetailsSectionProps)
                                             <FormLabel>¿Pertenecen a algún grupo?</FormLabel>
                                             <FormControl>
                                                 <RadioGroup
-                                                    onValueChange={(value) => field.onChange(value ? value === 'true' : undefined)}
+                                                    onValueChange={(value) => field.onChange(value === 'true')}
                                                     value={field.value === undefined ? "" : String(field.value)}
                                                     className="flex items-center space-x-4"
                                                 >
@@ -226,7 +226,7 @@ export function MarriageDetailsSection({ control }: MarriageDetailsSectionProps)
                                             <FormItem>
                                                 <FormLabel>Nombre del grupo</FormLabel>
                                                 <FormControl>
-                                                    <Input placeholder="Escriba el nombre del grupo" {...field} />
+                                                    <Input placeholder="Escriba el nombre del grupo" {...field} value={field.value ?? ''} />
                                                 </FormControl>
                                                 <FormMessage />
                                             </FormItem>

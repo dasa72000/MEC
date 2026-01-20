@@ -90,7 +90,7 @@ export const fichaMatrimonialSchema = z.object({
     civilMarriageDate: z.date().optional(),
     religiousMarriageDate: z.date().optional(),
   }).refine(data => {
-    if (data.belongsToGroup && !data.group) {
+    if (data.belongsToGroup === true && !data.group) {
       return false;
     }
     return true;
