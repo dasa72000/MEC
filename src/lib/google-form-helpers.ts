@@ -10,7 +10,7 @@ const fieldMappings = {
   community: 'entry.1088149683',
   country: 'entry.791191831',
   affiliation: 'entry.553504835',
-  encounterYear: 'entry.1308011902',
+  encounterDate: 'entry.1308011902',
   civilMarriageDate: 'entry.1705889295',
   religiousMarriageDate: 'entry.2019193873',
   belongsToGroup: 'entry.1168466126',
@@ -114,7 +114,7 @@ export function submitToGoogleForm(data: FichaMatrimonialData) {
     appendData(fieldMappings.community, data.marriageData.community);
     appendData(fieldMappings.country, data.marriageData.country);
     appendData(fieldMappings.affiliation, data.marriageData.affiliation);
-    appendData(fieldMappings.encounterYear, data.marriageData.encounterYear);
+    appendData(fieldMappings.encounterDate, formatDate(data.marriageData.encounterDate));
     appendData(fieldMappings.civilMarriageDate, formatDate(data.marriageData.civilMarriageDate));
     appendData(fieldMappings.religiousMarriageDate, formatDate(data.marriageData.religiousMarriageDate));
     appendData(fieldMappings.belongsToGroup, data.marriageData.belongsToGroup ? 'Sí' : 'No');

@@ -43,19 +43,6 @@ export function MarriageDetailsSection({ control }: MarriageDetailsSectionProps)
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <FormField
                                     control={control}
-                                    name="marriageData.encounterNumber"
-                                    render={({ field }) => (
-                                        <FormItem>
-                                            <FormLabel>Número de Encuentro *</FormLabel>
-                                            <FormControl>
-                                                <Input placeholder="12" {...field} />
-                                            </FormControl>
-                                            <FormMessage />
-                                        </FormItem>
-                                    )}
-                                />
-                                <FormField
-                                    control={control}
                                     name="marriageData.community"
                                     render={({ field }) => (
                                         <FormItem>
@@ -71,6 +58,36 @@ export function MarriageDetailsSection({ control }: MarriageDetailsSectionProps)
                                                     <SelectItem value="002 - Otra Comunidad">002 - Otra Comunidad</SelectItem>
                                                 </SelectContent>
                                             </Select>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
+                                <FormField
+                                    control={control}
+                                    name="marriageData.encounterNumber"
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel>Número de Encuentro *</FormLabel>
+                                            <FormControl>
+                                                <Input placeholder="12" {...field} />
+                                            </FormControl>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
+                                <FormField
+                                    control={control}
+                                    name="marriageData.encounterDate"
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel>Fecha de Encuentro</FormLabel>
+                                            <FormControl>
+                                                <DatePicker
+                                                    value={field.value}
+                                                    onChange={field.onChange}
+                                                    placeholder="mm/dd/yyyy"
+                                                />
+                                            </FormControl>
                                             <FormMessage />
                                         </FormItem>
                                     )}
@@ -105,19 +122,6 @@ export function MarriageDetailsSection({ control }: MarriageDetailsSectionProps)
                                             <FormLabel>Afiliación</FormLabel>
                                             <FormControl>
                                                 <Input placeholder="as" {...field} />
-                                            </FormControl>
-                                            <FormMessage />
-                                        </FormItem>
-                                    )}
-                                />
-                                <FormField
-                                    control={control}
-                                    name="marriageData.encounterYear"
-                                    render={({ field }) => (
-                                        <FormItem>
-                                            <FormLabel>Año de Encuentro</FormLabel>
-                                            <FormControl>
-                                                <Input placeholder="Ej: 2007" {...field} />
                                             </FormControl>
                                             <FormMessage />
                                         </FormItem>
