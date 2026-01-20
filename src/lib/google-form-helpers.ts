@@ -98,11 +98,6 @@ function formatGrowthGroups(groups: any[] | undefined): string {
 export async function submitToGoogleForm(data: FichaMatrimonialData) {
     const formData = new FormData();
 
-    // --- INICIO: LOGS DE DEPURACIÓN ---
-    console.log("---------- Datos a Enviar a Google Forms ----------");
-    console.log("Datos crudos del formulario:", data);
-    // --- FIN: LOGS DE DEPURACIÓN ---
-
     formData.append(fieldMappings.memberCode, data.marriageData.memberCode || '');
     formData.append(fieldMappings.encounterNumber, data.marriageData.encounterNumber);
     formData.append(fieldMappings.community, data.marriageData.community);
