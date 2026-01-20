@@ -43,19 +43,6 @@ export function MarriageDetailsSection({ control }: MarriageDetailsSectionProps)
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <FormField
                                     control={control}
-                                    name="marriageData.memberCode"
-                                    render={({ field }) => (
-                                        <FormItem>
-                                            <FormLabel>Código de Miembro</FormLabel>
-                                            <FormControl>
-                                                <Input placeholder="Ej: 006681074" {...field} />
-                                            </FormControl>
-                                            <FormMessage />
-                                        </FormItem>
-                                    )}
-                                />
-                                <FormField
-                                    control={control}
                                     name="marriageData.encounterNumber"
                                     render={({ field }) => (
                                         <FormItem>

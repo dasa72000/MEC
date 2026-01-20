@@ -47,7 +47,6 @@ export function DatePicker({ value, onChange, className, placeholder = "Seleccio
           captionLayout="dropdown-buttons"
           fromYear={1970}
           toYear={2035}
-          disabled={(date) => date > new Date() || date < new Date("1900-01-01")}
         />
       </PopoverContent>
     </Popover>
