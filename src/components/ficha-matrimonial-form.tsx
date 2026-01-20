@@ -77,6 +77,7 @@ export function FichaMatrimonialForm() {
       growthLadder: [],
       serverRetreats: {},
       secretariats: [],
+      attendsGeneralAssembly: undefined,
       growthGroups: [],
       observations: "",
     },

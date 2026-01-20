@@ -44,7 +44,6 @@ const serverRetreatsSchema = z.object({
 const secretariatSchema = z.object({
   name: requiredString,
   year: yearSchema,
-  inAssembly: z.boolean().default(false),
 });
 
 const growthGroupSchema = z.object({
@@ -85,6 +84,7 @@ export const fichaMatrimonialSchema = z.object({
   growthLadder: z.array(growthLadderEntrySchema).default([]),
   serverRetreats: serverRetreatsSchema,
   secretariats: z.array(secretariatSchema).default([]),
+  attendsGeneralAssembly: z.boolean({ required_error: "Por favor, indique si asisten a las asambleas." }),
   growthGroups: z.array(growthGroupSchema).default([]),
   observations: z.string().optional(),
 });
