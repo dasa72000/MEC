@@ -95,15 +95,12 @@ function formatGrowthGroups(groups: any[] | undefined): string {
 }
 
 export async function submitToGoogleForm(data: FichaMatrimonialData) {
-    const GOOGLE_FORM_VIEW_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSceHliAO4zEK7CdhQwq2oSXls9E_S6PHE10EMOa86nTEhKxsA/viewform';
     const GOOGLE_FORM_ACTION_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSceHliAO4zEK7CdhQwq2oSXls9E_S6PHE10EMOa86nTEhKxsA/formResponse';
 
     const formData = new FormData();
-    const debugParams = new URLSearchParams();
 
     const appendData = (key: string, value: string) => {
         formData.append(key, value);
-        debugParams.append(key, value);
     };
 
     appendData(fieldMappings.memberCode, data.marriageData.memberCode || '');
@@ -166,11 +163,6 @@ export async function submitToGoogleForm(data: FichaMatrimonialData) {
     appendData(fieldMappings.growthGroups, formatGrowthGroups(data.growthGroups));
 
     appendData(fieldMappings.observations, data.observations || 'Sin observaciones.');
-    
-    const debugUrl = `${GOOGLE_FORM_VIEW_URL}?${debugParams.toString()}`;
-    console.log('--- PRUEBA DE DEBUG ---');
-    console.log('Copia y pega la siguiente URL en tu navegador para ver si los datos se cargan en el formulario de Google. Si algunos campos están vacíos, los IDs han cambiado y necesitamos un nuevo enlace de pre-rellenado.');
-    console.log(debugUrl);
     
     try {
         await fetch(GOOGLE_FORM_ACTION_URL, {
