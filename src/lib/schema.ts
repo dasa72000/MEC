@@ -58,6 +58,23 @@ const growthLadderEntrySchema = z.object({
   date: z.date().optional(),
 });
 
+export const DEPARTMENTS = [
+  "Ahuachapán",
+  "Cabañas",
+  "Chalatenango",
+  "Cuscatlán",
+  "La Libertad",
+  "La Paz",
+  "La Unión",
+  "Morazán",
+  "San Miguel",
+  "San Salvador",
+  "San Vicente",
+  "Santa Ana",
+  "Sonsonate",
+  "Usulután",
+] as const;
+
 
 export const fichaMatrimonialSchema = z.object({
   marriageData: z.object({
@@ -75,10 +92,9 @@ export const fichaMatrimonialSchema = z.object({
   groomData: personSchema,
   brideData: personSchema,
   address: z.object({
-    street: requiredString,
-    city: requiredString,
-    state: requiredString,
-    zip: requiredString,
+    fullAddress: requiredString,
+    municipality: requiredString,
+    department: z.enum(DEPARTMENTS, { required_error: "Debe seleccionar un departamento." }),
     homePhone: requiredString,
   }),
   growthLadder: z.array(growthLadderEntrySchema).default([]),

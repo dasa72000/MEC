@@ -7,20 +7,8 @@ import { Loader2 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
+  Form
 } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
 import {
   fichaMatrimonialSchema,
@@ -33,6 +21,7 @@ import { GrowthGroupsSection } from "./sections/growth-groups-section";
 import { MarriageDetailsSection } from "./sections/marriage-details-section";
 import { GrowthLadderSection } from "./sections/growth-ladder-section";
 import { ObservationsSection } from "./sections/observations-section";
+import { AddressSection } from "./sections/address-section";
 
 export function FichaMatrimonialForm() {
   const [isLoading, setIsLoading] = useState(false);
@@ -73,7 +62,12 @@ export function FichaMatrimonialForm() {
         cellPhone: "",
         officePhone: "",
       },
-      address: { street: "", city: "", state: "", zip: "", homePhone: "" },
+      address: {
+        fullAddress: "",
+        municipality: "",
+        department: undefined,
+        homePhone: "",
+      },
       growthLadder: [],
       serverRetreats: {},
       secretariats: [],
@@ -103,18 +97,7 @@ export function FichaMatrimonialForm() {
 
         <PersonDetailsSection control={form.control} />
 
-        <Card>
-          <CardHeader>
-            <CardTitle>Dirección</CardTitle>
-          </CardHeader>
-          <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <FormField control={form.control} name="address.street" render={({ field }) => (<FormItem><FormLabel>Calle y Número</FormLabel><FormControl><Input placeholder="Av. Siempre Viva 123" {...field} /></FormControl><FormMessage /></FormItem>)} />
-            <FormField control={form.control} name="address.city" render={({ field }) => (<FormItem><FormLabel>Ciudad</FormLabel><FormControl><Input placeholder="Springfield" {...field} /></FormControl><FormMessage /></FormItem>)} />
-            <FormField control={form.control} name="address.state" render={({ field }) => (<FormItem><FormLabel>Estado/Provincia</FormLabel><FormControl><Input placeholder="Estado" {...field} /></FormControl><FormMessage /></FormItem>)} />
-            <FormField control={form.control} name="address.zip" render={({ field }) => (<FormItem><FormLabel>Código Postal</FormLabel><FormControl><Input placeholder="12345" {...field} /></FormControl><FormMessage /></FormItem>)} />
-            <FormField control={form.control} name="address.homePhone" render={({ field }) => (<FormItem><FormLabel>Teléfono de Casa</FormLabel><FormControl><Input placeholder="555-1234" {...field} /></FormControl><FormMessage /></FormItem>)} />
-          </CardContent>
-        </Card>
+        <AddressSection control={form.control} />
 
         <GrowthLadderSection control={form.control} />
 
