@@ -28,8 +28,8 @@ function Calendar({
         nav_button_previous: "absolute left-1",
         nav_button_next: "absolute right-1",
         // Add padding for spacing
-        head_cell: "p-4",
-        cell: "p-4",
+        head_cell: "p-8",
+        cell: "p-8",
         ...classNames,
       }}
       components={{
