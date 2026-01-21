@@ -51,6 +51,7 @@ function Calendar({
         ...classNames,
       }}
       components={{
+        Head: () => null, // This completely removes the header with the weekdays
         IconLeft: ({ ...props }) => <ChevronLeft className="h-4 w-4" />,
         IconRight: ({ ...props }) => <ChevronRight className="h-4 w-4" />,
       }}
