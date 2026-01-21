@@ -22,10 +22,6 @@ type DatePickerProps = {
   placeholder?: string
 }
 
-const formatWeekdayName = (day: Date, options?: { locale?: any }) => {
-    return format(day, 'EEEEE', { locale: options?.locale });
-};
-
 export function DatePicker({ value, onChange, className, placeholder = "dd/mm/yyyy" }: DatePickerProps) {
   const [inputValue, setInputValue] = React.useState<string>("");
   const [popoverOpen, setPopoverOpen] = React.useState(false);
@@ -113,7 +109,6 @@ export function DatePicker({ value, onChange, className, placeholder = "dd/mm/yy
           captionLayout="dropdown-buttons"
           fromYear={1970}
           toYear={new Date().getFullYear() + 5}
-          formatters={{ formatWeekdayName }}
         />
       </PopoverContent>
     </Popover>
