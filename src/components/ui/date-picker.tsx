@@ -40,13 +40,35 @@ export function DatePicker({ value, onChange, className, placeholder = "dd/mm/yy
   };
 
   const handleInputBlur = () => {
-    const parsedDate = parse(inputValue, dateFormat, new Date());
+    const text = inputValue.trim();
+
+    if (text === "") {
+      if (value) {
+        onChange(undefined);
+      }
+      return;
+    }
+
+    // Auto-format ddmmyyyy to dd/mm/yyyy
+    let dateStringToParse = text;
+    if (/^\d{8}$/.test(text)) {
+      dateStringToParse = `${text.slice(0, 2)}/${text.slice(2, 4)}/${text.slice(4, 8)}`;
+    }
+
+    const parsedDate = parse(dateStringToParse, dateFormat, new Date());
+
     if (isValid(parsedDate)) {
+      // If date is valid, update the form and format the input
+      setInputValue(format(parsedDate, dateFormat));
       if (!value || value.getTime() !== parsedDate.getTime()) {
         onChange(parsedDate);
       }
     } else {
-      if (value) {
+      // If date is invalid, revert to the last valid value or clear the input
+      if (value && isValid(value)) {
+        setInputValue(format(value, dateFormat));
+      } else {
+        setInputValue("");
         onChange(undefined);
       }
     }
