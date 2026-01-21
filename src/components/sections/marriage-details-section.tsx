@@ -85,7 +85,6 @@ export function MarriageDetailsSection({ control }: MarriageDetailsSectionProps)
                                                 <DatePicker
                                                     value={field.value}
                                                     onChange={field.onChange}
-                                                    placeholder="mm/dd/yyyy"
                                                 />
                                             </FormControl>
                                             <FormMessage />
@@ -137,7 +136,6 @@ export function MarriageDetailsSection({ control }: MarriageDetailsSectionProps)
                                                 <DatePicker
                                                     value={field.value}
                                                     onChange={field.onChange}
-                                                    placeholder="mm/dd/yyyy"
                                                 />
                                             </FormControl>
                                             <FormMessage />
@@ -154,7 +152,6 @@ export function MarriageDetailsSection({ control }: MarriageDetailsSectionProps)
                                                 <DatePicker
                                                     value={field.value}
                                                     onChange={field.onChange}
-                                                    placeholder="mm/dd/yyyy"
                                                 />
                                             </FormControl>
                                             <FormMessage />

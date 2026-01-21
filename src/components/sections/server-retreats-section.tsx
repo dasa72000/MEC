@@ -43,7 +43,7 @@ function RetreatTypeSubSection({
                 render={({ field }) => (
                   <FormItem>
                     <FormControl>
-                      <DatePicker value={field.value} onChange={field.onChange} placeholder="mm/dd/yyyy" />
+                      <DatePicker value={field.value} onChange={field.onChange} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
