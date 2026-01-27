@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
-import { I18nProvider } from "react-aria-components";
 import { FichaMatrimonialForm } from "@/components/ficha-matrimonial-form";
 
 const LoadingSkeleton = () => (
@@ -30,8 +29,6 @@ export function FichaMatrimonialLoader() {
   }
 
   return (
-    <I18nProvider locale="es">
       <FichaMatrimonialForm />
-    </I18nProvider>
   );
 }
