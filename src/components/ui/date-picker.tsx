@@ -109,6 +109,7 @@ export function DatePicker({ value, onChange, className, placeholder }: DatePick
           captionLayout="dropdown-buttons"
           fromYear={1970}
           toYear={new Date().getFullYear() + 5}
+          showOutsideDays={false}
         />
       </PopoverContent>
     </Popover>
