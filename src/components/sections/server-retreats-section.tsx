@@ -9,8 +9,9 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { RETREAT_TYPES, type FichaMatrimonialData } from "@/lib/schema";
-import { CheckCircle, PlusCircle, Trash2 } from "lucide-react";
+import { CheckCircle, PlusCircle, X } from "lucide-react";
 import { DateSelector } from "../ui/date-selector";
+import { Textarea } from "../ui/textarea";
 
 interface ServerRetreatsSectionProps {
   control: Control<FichaMatrimonialData>;
@@ -34,59 +35,64 @@ function RetreatTypeSubSection({
         <CardTitle className="text-base font-medium">{retreatType}</CardTitle>
       </CardHeader>
       <CardContent className="p-4 pt-0 space-y-4">
-        <div className="hidden md:grid md:grid-cols-[1.5fr,1fr,1fr,auto] gap-2 items-center text-sm font-medium text-muted-foreground px-2">
-            <p>Fecha</p>
-            <p>Rol</p>
-            <p>Comentarios</p>
-        </div>
         <div className="space-y-4">
           {fields.map((field, index) => (
-            <div key={field.id} className="grid grid-cols-1 md:grid-cols-[1.5fr,1fr,1fr,auto] gap-2 items-start">
-              <FormField
-                control={control}
-                name={`serverRetreats.${retreatType}.${index}.date`}
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="md:hidden">Fecha</FormLabel>
-                    <FormControl>
-                      <DateSelector value={field.value || ''} onChange={field.onChange} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={control}
-                name={`serverRetreats.${retreatType}.${index}.role`}
-                render={({ field }) => (
-                  <FormItem>
-                     <FormLabel className="md:hidden">Rol</FormLabel>
-                    <FormControl><Input placeholder="Rol" {...field} value={field.value || ''} /></FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={control}
-                name={`serverRetreats.${retreatType}.${index}.comments`}
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="md:hidden">Comentarios</FormLabel>
-                    <FormControl><Input placeholder="Comentarios" {...field} value={field.value || ''} /></FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <Button type="button" variant="ghost" size="icon" className="text-destructive hover:bg-destructive/10 md:mt-0 mt-2" onClick={() => remove(index)}>
-                <Trash2 className="h-4 w-4" />
+            <div key={field.id} className="p-4 border rounded-lg relative bg-background/50">
+              <Button
+                type="button"
+                variant="ghost"
+                size="icon"
+                className="absolute top-2 right-2 text-destructive hover:bg-destructive/10"
+                onClick={() => remove(index)}
+              >
+                <X className="h-4 w-4" />
               </Button>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4">
+                <FormField
+                  control={control}
+                  name={`serverRetreats.${retreatType}.${index}.role`}
+                  render={({ field: roleField }) => (
+                    <FormItem>
+                      <FormLabel>Rol</FormLabel>
+                      <FormControl><Input placeholder="Rol que desempeñó" {...roleField} value={roleField.value || ''} /></FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={control}
+                  name={`serverRetreats.${retreatType}.${index}.date`}
+                  render={({ field: dateField }) => (
+                    <FormItem>
+                      <FormLabel>Fecha (Opcional)</FormLabel>
+                      <FormControl>
+                        <DateSelector value={dateField.value || ''} onChange={dateField.onChange} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <div className="md:col-span-2">
+                  <FormField
+                    control={control}
+                    name={`serverRetreats.${retreatType}.${index}.comments`}
+                    render={({ field: commentsField }) => (
+                      <FormItem>
+                        <FormLabel>Comentarios</FormLabel>
+                        <FormControl><Textarea placeholder="Comentarios adicionales" className="min-h-[80px]" {...commentsField} value={commentsField.value || ''} /></FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+              </div>
             </div>
           ))}
         </div>
         <Button
           type="button"
           variant="outline"
-          className="w-full border-dashed"
+          className="w-full border-dashed mt-4"
           onClick={() => append({ date: "", role: "", comments: "" })}
         >
           <PlusCircle className="mr-2 h-4 w-4" />
@@ -117,7 +123,7 @@ export function ServerRetreatsSection({ control }: ServerRetreatsSectionProps) {
             <CardContent className="pt-0 space-y-6">
               <Alert>
                 <AlertDescription>
-                  Puede agregar múltiples registros por tipo de retiro. Cada registro guarda: <strong>Fecha, Rol</strong> y <strong>Comentarios</strong>.
+                  Puede agregar múltiples registros por tipo de retiro. Para cada registro, el rol es obligatorio si se ingresa cualquier otro dato.
                 </AlertDescription>
               </Alert>
 
