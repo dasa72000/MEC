@@ -3,30 +3,29 @@
 import * as React from "react"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import { DayPicker } from "react-day-picker"
-import { es } from "date-fns/locale"
 
 import { cn } from "@/lib/utils"
 import { buttonVariants } from "@/components/ui/button"
 
-export type CalendarProps = React.ComponentProps<typeof DayPicker>
-
-function Calendar({
-  className,
-  classNames,
-  showOutsideDays = true,
-  ...props
-}: CalendarProps) {
+export function Calendar(props: React.ComponentProps<typeof DayPicker>) {
   return (
     <DayPicker
-      locale={es}
+      showOutsideDays
       weekStartsOn={1}
-      showOutsideDays={showOutsideDays}
-      className={cn("p-3", className)}
+      formatters={{
+        formatWeekdayName: (day) => {
+          const map = ["lu", "ma", "mi", "ju", "vi", "sá", "do"]
+          return map[day.getDay() === 0 ? 6 : day.getDay() - 1]
+        },
+      }}
+      className="p-3"
       classNames={{
-        months: "flex flex-col sm:flex-row space-y-4 sm:space-x-4 sm:space-y-0",
+        months: "flex flex-col gap-4",
         month: "space-y-4",
-        caption: "flex justify-center pt-1 relative items-center",
+
+        caption: "relative flex items-center justify-center",
         caption_label: "text-sm font-medium",
+
         nav: "flex items-center gap-1",
         nav_button: cn(
           buttonVariants({ variant: "ghost" }),
@@ -34,15 +33,15 @@ function Calendar({
         ),
         nav_button_previous: "absolute left-1",
         nav_button_next: "absolute right-1",
+
         day: cn(
           buttonVariants({ variant: "ghost" }),
           "h-9 w-9 p-0 font-normal"
         ),
-        day_selected:
-          "bg-primary text-primary-foreground hover:bg-primary",
+
+        day_selected: "bg-primary text-primary-foreground",
         day_today: "bg-accent text-accent-foreground",
         day_outside: "text-muted-foreground opacity-50",
-        ...classNames,
       }}
       components={{
         IconLeft: () => <ChevronLeft className="h-4 w-4" />,
@@ -52,6 +51,3 @@ function Calendar({
     />
   )
 }
-Calendar.displayName = "Calendar"
-
-export { Calendar }
