@@ -8,6 +8,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Button } from "@/components/ui/button";
+import { X } from "lucide-react";
 
 interface DateSelectorProps {
   value?: string;
@@ -62,47 +64,68 @@ export function DateSelector({ value, onChange }: DateSelectorProps) {
     triggerChange(day, month, y);
   };
 
+  const handleClear = () => {
+    setDay('');
+    setMonth('');
+    setYear('');
+    onChange('');
+  };
+
   return (
-    <div className="grid grid-cols-3 gap-2">
-      <Select value={day} onValueChange={handleDayChange}>
-        <SelectTrigger>
-          <SelectValue placeholder="Día" />
-        </SelectTrigger>
-        <SelectContent>
-          {DAYS.map((d) => (
-            <SelectItem key={d} value={String(d)}>
-              {d}
-            </SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
-      <Select value={month} onValueChange={handleMonthChange}>
-        <SelectTrigger>
-          <SelectValue placeholder="Mes" />
-        </SelectTrigger>
-        <SelectContent>
-          {MONTHS.map((m) => {
-            const monthName = new Date(2000, m - 1, 1).toLocaleString('es', { month: 'long' });
-            return (
-                <SelectItem key={m} value={String(m)}>
-                    {monthName.charAt(0).toUpperCase() + monthName.slice(1)}
-                </SelectItem>
-            )
-          })}
-        </SelectContent>
-      </Select>
-      <Select value={year} onValueChange={handleYearChange}>
-        <SelectTrigger>
-          <SelectValue placeholder="Año" />
-        </SelectTrigger>
-        <SelectContent>
-          {YEARS.map((y) => (
-            <SelectItem key={y} value={String(y)}>
-              {y}
-            </SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
+    <div className="flex items-center gap-2">
+      <div className="grid grid-cols-3 gap-2 grow">
+        <Select value={day} onValueChange={handleDayChange}>
+          <SelectTrigger>
+            <SelectValue placeholder="Día" />
+          </SelectTrigger>
+          <SelectContent>
+            {DAYS.map((d) => (
+              <SelectItem key={d} value={String(d)}>
+                {d}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+        <Select value={month} onValueChange={handleMonthChange}>
+          <SelectTrigger>
+            <SelectValue placeholder="Mes" />
+          </SelectTrigger>
+          <SelectContent>
+            {MONTHS.map((m) => {
+              const monthName = new Date(2000, m - 1, 1).toLocaleString('es', { month: 'long' });
+              return (
+                  <SelectItem key={m} value={String(m)}>
+                      {monthName.charAt(0).toUpperCase() + monthName.slice(1)}
+                  </SelectItem>
+              )
+            })}
+          </SelectContent>
+        </Select>
+        <Select value={year} onValueChange={handleYearChange}>
+          <SelectTrigger>
+            <SelectValue placeholder="Año" />
+          </SelectTrigger>
+          <SelectContent>
+            {YEARS.map((y) => (
+              <SelectItem key={y} value={String(y)}>
+                {y}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </div>
+      {(day || month || year) ? (
+        <Button
+            type="button"
+            variant="ghost"
+            size="icon"
+            className="h-10 w-10 shrink-0"
+            onClick={handleClear}
+            aria-label="Limpiar fecha"
+        >
+            <X className="h-4 w-4 text-muted-foreground" />
+        </Button>
+      ) : <div className="h-10 w-10 shrink-0" /> }
     </div>
   );
 }

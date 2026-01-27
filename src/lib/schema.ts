@@ -49,13 +49,6 @@ const serverRetreatEntrySchema = z.object({
 }).refine((data) => {
     const hasValue = data.role || data.comments || (data.date && data.date !== '');
     if (!hasValue) return true;
-    return data.date && data.date !== '';
-}, {
-    message: "La fecha es requerida.",
-    path: ['date'],
-}).refine((data) => {
-    const hasValue = data.role || data.comments || (data.date && data.date !== '');
-    if (!hasValue) return true;
     return data.role && data.role !== '';
 }, {
     message: "El rol es requerido.",
