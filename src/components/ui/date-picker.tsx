@@ -118,7 +118,7 @@ type FormDatePickerProps = {
 };
 
 function toCalendarDate(date: Date | undefined): CalendarDate | undefined {
-  if (!date) return undefined;
+  if (!date || isNaN(date.getTime())) return undefined;
   const dateStr = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(
     2,
     '0'
