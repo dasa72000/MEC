@@ -73,7 +73,7 @@ export function FichaMatrimonialForm() {
       growthLadder: [
         { name: "Diálogo", date: '11/11/2011' },
         { name: "Renovación Conyugal", date: '12/12/2012' },
-        { name: "Fe y Conversión", date: '10/10/2013' },
+        { name: "Fe y Conversión", date: '' },
       ],
       serverRetreats: {
         Encuentro: [{ role: "Matrimonio Animador", date: "01/01/2015", comments: "Fue una gran experiencia de servicio." }],
