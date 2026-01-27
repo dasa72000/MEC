@@ -1,5 +1,4 @@
 @import "react-day-picker/style.css";
-@import "@/styles/daypicker-fix.css";
 
 @tailwind base;
 @tailwind components;

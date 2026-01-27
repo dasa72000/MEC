@@ -33,6 +33,12 @@ export function Calendar(props: React.ComponentProps<typeof DayPicker>) {
         ),
         nav_button_previous: "absolute left-1",
         nav_button_next: "absolute right-1",
+        
+        head_row: "",
+        head_cell:
+          "text-muted-foreground text-center font-normal text-[0.8rem]",
+        row: "w-full",
+        cell: "h-9 w-9 text-center text-sm p-0 relative",
 
         day: cn(
           buttonVariants({ variant: "ghost" }),

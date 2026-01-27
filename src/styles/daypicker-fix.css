@@ -1,9 +1,0 @@
-/* Evita que Tailwind Preflight rompa react-day-picker */
-.rdp,
-.rdp * {
-  all: revert;
-}
-
-.rdp {
-  font-family: inherit;
-}
