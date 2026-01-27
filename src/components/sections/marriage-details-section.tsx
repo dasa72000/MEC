@@ -11,6 +11,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import type { FichaMatrimonialData } from "@/lib/schema";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Separator } from "@/components/ui/separator";
+import { DateSelector } from "@/components/ui/date-selector";
 
 interface MarriageDetailsSectionProps {
     control: Control<FichaMatrimonialData>;
@@ -81,7 +82,7 @@ export function MarriageDetailsSection({ control }: MarriageDetailsSectionProps)
                                         <FormItem>
                                             <FormLabel>Fecha de Encuentro</FormLabel>
                                             <FormControl>
-                                                <Input placeholder="dd/mm/yyyy" {...field} value={field.value ?? ''} />
+                                                <DateSelector value={field.value} onChange={field.onChange} />
                                             </FormControl>
                                             <FormMessage />
                                         </FormItem>
@@ -129,7 +130,7 @@ export function MarriageDetailsSection({ control }: MarriageDetailsSectionProps)
                                         <FormItem>
                                             <FormLabel>Fecha de Boda Civil</FormLabel>
                                             <FormControl>
-                                                <Input placeholder="dd/mm/yyyy" {...field} value={field.value ?? ''} />
+                                                <DateSelector value={field.value} onChange={field.onChange} />
                                             </FormControl>
                                             <FormMessage />
                                         </FormItem>
@@ -142,7 +143,7 @@ export function MarriageDetailsSection({ control }: MarriageDetailsSectionProps)
                                         <FormItem>
                                             <FormLabel>Fecha de Boda Religiosa</FormLabel>
                                             <FormControl>
-                                                <Input placeholder="dd/mm/yyyy" {...field} value={field.value ?? ''} />
+                                                <DateSelector value={field.value} onChange={field.onChange} />
                                             </FormControl>
                                             <FormMessage />
                                         </FormItem>

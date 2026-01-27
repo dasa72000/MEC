@@ -8,6 +8,7 @@ import { FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/comp
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import type { FichaMatrimonialData } from "@/lib/schema";
+import { DateSelector } from "../ui/date-selector";
 
 interface PersonDetailsSectionProps {
     control: Control<FichaMatrimonialData>;
@@ -19,7 +20,7 @@ function PersonFormFields({ control, personType }: { control: Control<FichaMatri
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <FormField control={control} name={`${personType}.names`} render={({ field }) => (<FormItem><FormLabel>Nombres *</FormLabel><FormControl><Input placeholder="Nombres completos" {...field} /></FormControl><FormMessage /></FormItem>)} />
                 <FormField control={control} name={`${personType}.lastNames`} render={({ field }) => (<FormItem><FormLabel>Apellidos *</FormLabel><FormControl><Input placeholder="Apellidos" {...field} /></FormControl><FormMessage /></FormItem>)} />
-                <FormField control={control} name={`${personType}.birthDate`} render={({ field }) => (<FormItem><FormLabel>Fecha de Nacimiento</FormLabel><FormControl><Input placeholder="dd/mm/yyyy" {...field} value={field.value ?? ''} /></FormControl><FormMessage /></FormItem>)} />
+                <FormField control={control} name={`${personType}.birthDate`} render={({ field }) => (<FormItem><FormLabel>Fecha de Nacimiento</FormLabel><FormControl><DateSelector value={field.value} onChange={field.onChange} /></FormControl><FormMessage /></FormItem>)} />
                 <FormField control={control} name={`${personType}.dui`} render={({ field }) => (<FormItem><FormLabel>DUI</FormLabel><FormControl><Input placeholder="00000000-0" {...field} /></FormControl><FormMessage /></FormItem>)} />
                 <FormField control={control} name={`${personType}.nit`} render={({ field }) => (<FormItem><FormLabel>NIT</FormLabel><FormControl><Input placeholder="0000-000000-000-0" {...field} /></FormControl><FormMessage /></FormItem>)} />
                 <FormField control={control} name={`${personType}.occupation`} render={({ field }) => (<FormItem><FormLabel>Profesión</FormLabel><FormControl><Input placeholder="Profesión u oficio" {...field} /></FormControl><FormMessage /></FormItem>)} />

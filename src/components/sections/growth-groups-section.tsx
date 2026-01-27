@@ -23,6 +23,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Group, PlusCircle, X } from "lucide-react";
 import type { FichaMatrimonialData } from "@/lib/schema";
+import { DateSelector } from "../ui/date-selector";
 
 interface GrowthGroupsSectionProps {
   control: Control<FichaMatrimonialData>;
@@ -92,7 +93,7 @@ export function GrowthGroupsSection({ control }: GrowthGroupsSectionProps) {
                           render={({ field }) => (
                             <FormItem>
                               <FormControl>
-                                <Input placeholder="dd/mm/yyyy" {...field} />
+                                <DateSelector value={field.value} onChange={field.onChange} />
                               </FormControl>
                               <FormMessage />
                             </FormItem>
@@ -104,7 +105,7 @@ export function GrowthGroupsSection({ control }: GrowthGroupsSectionProps) {
                           render={({ field }) => (
                             <FormItem>
                               <FormControl>
-                                <Input placeholder="dd/mm/yyyy" {...field} />
+                                <DateSelector value={field.value} onChange={field.onChange} />
                               </FormControl>
                               <FormMessage />
                             </FormItem>

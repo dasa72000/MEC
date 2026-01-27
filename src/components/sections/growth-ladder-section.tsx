@@ -8,7 +8,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { GROWTH_LADDER_STEPS, type FichaMatrimonialData } from "@/lib/schema";
 import { ClipboardList } from "lucide-react";
-import { Input } from "../ui/input";
+import { DateSelector } from "../ui/date-selector";
 
 interface GrowthLadderSectionProps {
   control: Control<FichaMatrimonialData>;
@@ -79,7 +79,7 @@ export function GrowthLadderSection({ control }: GrowthLadderSectionProps) {
                                     render={({ field: dateField }) => (
                                         <FormItem>
                                             <FormControl>
-                                                <Input placeholder="dd/mm/yyyy" {...dateField} />
+                                                <DateSelector value={dateField.value} onChange={dateField.onChange} />
                                             </FormControl>
                                             <FormMessage />
                                         </FormItem>

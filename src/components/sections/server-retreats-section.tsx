@@ -10,6 +10,7 @@ import { FormControl, FormField, FormItem, FormMessage } from "@/components/ui/f
 import { Input } from "@/components/ui/input";
 import { RETREAT_TYPES, type FichaMatrimonialData } from "@/lib/schema";
 import { CheckCircle, PlusCircle, Trash2 } from "lucide-react";
+import { DateSelector } from "../ui/date-selector";
 
 interface ServerRetreatsSectionProps {
   control: Control<FichaMatrimonialData>;
@@ -42,7 +43,7 @@ function RetreatTypeSubSection({
                 render={({ field }) => (
                   <FormItem>
                     <FormControl>
-                      <Input placeholder="dd/mm/yyyy" {...field} />
+                      <DateSelector value={field.value} onChange={field.onChange} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
