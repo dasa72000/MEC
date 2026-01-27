@@ -1,7 +1,6 @@
 import './globals.css';
 import type {Metadata} from 'next';
 import { Toaster } from "@/components/ui/toaster";
-import { AppI18nProvider } from '@/components/i18n-provider';
 
 export const metadata: Metadata = {
   title: 'Censo 2026',
@@ -22,9 +21,7 @@ export default function RootLayout({
         <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&display=swap" rel="stylesheet" />
       </head>
       <body className="font-body antialiased">
-        <AppI18nProvider>
-          {children}
-        </AppI18nProvider>
+        {children}
         <Toaster />
       </body>
     </html>
