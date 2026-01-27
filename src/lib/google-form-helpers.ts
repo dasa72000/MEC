@@ -82,7 +82,7 @@ function formatDateForGoogle(dateStr: string | undefined): string {
 
 function formatServerRetreats(retreats: any[] | undefined): string {
     if (!retreats || retreats.length === 0) return 'No aplica.';
-    return retreats.map(r => `Fecha: ${r.date || 'N/A'}, Rol: ${r.role || 'N/A'}, Comentarios: ${r.comments || 'N/A'}`).join('\n');
+    return retreats.map(r => `Rol: ${r.role || 'N/A'}, Fecha: ${r.date || 'N/A'}, Comentarios: ${r.comments || 'N/A'}`).join('\n');
 }
 
 function formatSecretariats(secretariats: any[] | undefined): string {
@@ -142,13 +142,23 @@ export function submitToGoogleForm(data: FichaMatrimonialData) {
     appendData(fieldMappings.homePhone, data.address.homePhone);
 
     const growthLadderMap = new Map(data.growthLadder.map(item => [item.name, item.date]));
-    appendData(fieldMappings.growthLadderDialogo, formatDateForGoogle(growthLadderMap.get('Diálogo')));
-    appendData(fieldMappings.growthLadderRenovacion, formatDateForGoogle(growthLadderMap.get('Renovación Conyugal')));
-    appendData(fieldMappings.growthLadderFeYConversion, formatDateForGoogle(growthLadderMap.get('Fe y Conversión')));
-    appendData(fieldMappings.growthLadderEscuela, formatDateForGoogle(growthLadderMap.get('Escuela de Animadores')));
-    appendData(fieldMappings.growthLadderPastoreo, formatDateForGoogle(growthLadderMap.get('Pastoreo')));
-    appendData(fieldMappings.growthLadderReencuentro, formatDateForGoogle(growthLadderMap.get('Reencuentro')));
-    appendData(fieldMappings.growthLadderConvivencia, formatDateForGoogle(growthLadderMap.get('Convivencia Familiar')));
+    
+    const formatGrowthLadderValue = (stepName: string) => {
+        if (!growthLadderMap.has(stepName)) return undefined; // Don't append if not checked
+        const dateStr = growthLadderMap.get(stepName);
+        if (dateStr && /^\d{2}\/\d{2}\/\d{4}$/.test(dateStr)) {
+          return `Sí : ${dateStr}`;
+        }
+        return 'Sí';
+    };
+
+    appendData(fieldMappings.growthLadderDialogo, formatGrowthLadderValue('Diálogo'));
+    appendData(fieldMappings.growthLadderRenovacion, formatGrowthLadderValue('Renovación Conyugal'));
+    appendData(fieldMappings.growthLadderFeYConversion, formatGrowthLadderValue('Fe y Conversión'));
+    appendData(fieldMappings.growthLadderEscuela, formatGrowthLadderValue('Escuela de Animadores'));
+    appendData(fieldMappings.growthLadderPastoreo, formatGrowthLadderValue('Pastoreo'));
+    appendData(fieldMappings.growthLadderReencuentro, formatGrowthLadderValue('Reencuentro'));
+    appendData(fieldMappings.growthLadderConvivencia, formatGrowthLadderValue('Convivencia Familiar'));
 
     appendData(fieldMappings.serverRetreatsEncuentro, formatServerRetreats(data.serverRetreats.Encuentro));
     appendData(fieldMappings.serverRetreatsDialogo, formatServerRetreats(data.serverRetreats.Diálogo));
@@ -166,6 +176,5 @@ export function submitToGoogleForm(data: FichaMatrimonialData) {
     
     const fullUrl = `${GOOGLE_FORM_URL}?${params.toString()}`;
     
-    console.log('Google Form URL:', fullUrl);
     window.open(fullUrl, '_blank');
 }
