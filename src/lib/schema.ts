@@ -5,19 +5,21 @@ const requiredString = z.string().min(1, "Este campo es requerido.");
 const yearSchema = z.coerce.number().int().min(1970, "El año debe ser mayor a 1970").max(2035, "El año debe ser menor a 2035");
 
 const dateString = z.string().optional().refine(val => {
+    if (val === 'PARTIAL') return false;
     if (!val || val.trim() === '') return true; // Let optional and empty strings pass
     if (!/^\d{2}\/\d{2}\/\d{4}$/.test(val)) return false;
     const [day, month, year] = val.split('/').map(Number);
     const d = new Date(year, month - 1, day);
     return d && d.getFullYear() === year && d.getMonth() === month - 1 && d.getDate() === day;
-}, { message: "Fecha inválida. Use formato dd/mm/yyyy." });
+}, { message: "Fecha inválida o incompleta. Por favor, complete día, mes y año." });
 
 const requiredDateString = z.string().min(1, "Este campo es requerido.").refine(val => {
+    if (val === 'PARTIAL') return false;
     if (!/^\d{2}\/\d{2}\/\d{4}$/.test(val)) return false;
     const [day, month, year] = val.split('/').map(Number);
     const d = new Date(year, month - 1, day);
     return d && d.getFullYear() === year && d.getMonth() === month - 1 && d.getDate() === day;
-}, { message: "Fecha inválida. Use formato dd/mm/yyyy." });
+}, { message: "Fecha inválida o incompleta. Por favor, complete día, mes y año." });
 
 const personSchema = z.object({
   names: requiredString,
@@ -41,9 +43,23 @@ export const RETREAT_TYPES = [
 ] as const;
 
 const serverRetreatEntrySchema = z.object({
-  date: requiredDateString,
-  role: requiredString,
+  date: dateString,
+  role: z.string().optional(),
   comments: z.string().optional(),
+}).refine((data) => {
+    const hasValue = data.role || data.comments || (data.date && data.date !== '');
+    if (!hasValue) return true;
+    return data.date && data.date !== '';
+}, {
+    message: "La fecha es requerida.",
+    path: ['date'],
+}).refine((data) => {
+    const hasValue = data.role || data.comments || (data.date && data.date !== '');
+    if (!hasValue) return true;
+    return data.role && data.role !== '';
+}, {
+    message: "El rol es requerido.",
+    path: ['role'],
 });
 
 const serverRetreatsSchema = z.object({

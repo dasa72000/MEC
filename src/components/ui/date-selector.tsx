@@ -42,8 +42,10 @@ export function DateSelector({ value, onChange }: DateSelectorProps) {
       const formattedDay = String(newDay).padStart(2, "0");
       const formattedMonth = String(newMonth).padStart(2, "0");
       onChange(`${formattedDay}/${formattedMonth}/${newYear}`);
-    } else {
+    } else if (!newDay && !newMonth && !newYear) {
       onChange('');
+    } else {
+      onChange('PARTIAL');
     }
   };
   

@@ -6,7 +6,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
+import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { RETREAT_TYPES, type FichaMatrimonialData } from "@/lib/schema";
 import { CheckCircle, PlusCircle, Trash2 } from "lucide-react";
@@ -34,16 +34,22 @@ function RetreatTypeSubSection({
         <CardTitle className="text-base font-medium">{retreatType}</CardTitle>
       </CardHeader>
       <CardContent className="p-4 pt-0 space-y-4">
+        <div className="hidden md:grid md:grid-cols-[1.5fr,1fr,1fr,auto] gap-2 items-center text-sm font-medium text-muted-foreground px-2">
+            <p>Fecha</p>
+            <p>Rol</p>
+            <p>Comentarios</p>
+        </div>
         <div className="space-y-4">
           {fields.map((field, index) => (
-            <div key={field.id} className="grid grid-cols-1 md:grid-cols-[1fr,1fr,1fr,auto] gap-2 items-start">
+            <div key={field.id} className="grid grid-cols-1 md:grid-cols-[1.5fr,1fr,1fr,auto] gap-2 items-start">
               <FormField
                 control={control}
                 name={`serverRetreats.${retreatType}.${index}.date`}
                 render={({ field }) => (
                   <FormItem>
+                    <FormLabel className="md:hidden">Fecha</FormLabel>
                     <FormControl>
-                      <DateSelector value={field.value} onChange={field.onChange} />
+                      <DateSelector value={field.value || ''} onChange={field.onChange} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -54,7 +60,8 @@ function RetreatTypeSubSection({
                 name={`serverRetreats.${retreatType}.${index}.role`}
                 render={({ field }) => (
                   <FormItem>
-                    <FormControl><Input placeholder="Rol" {...field} /></FormControl>
+                     <FormLabel className="md:hidden">Rol</FormLabel>
+                    <FormControl><Input placeholder="Rol" {...field} value={field.value || ''} /></FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -64,12 +71,13 @@ function RetreatTypeSubSection({
                 name={`serverRetreats.${retreatType}.${index}.comments`}
                 render={({ field }) => (
                   <FormItem>
-                    <FormControl><Input placeholder="Comentarios" {...field} /></FormControl>
+                    <FormLabel className="md:hidden">Comentarios</FormLabel>
+                    <FormControl><Input placeholder="Comentarios" {...field} value={field.value || ''} /></FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
-              <Button type="button" variant="ghost" size="icon" className="text-destructive hover:bg-destructive/10" onClick={() => remove(index)}>
+              <Button type="button" variant="ghost" size="icon" className="text-destructive hover:bg-destructive/10 md:mt-0 mt-2" onClick={() => remove(index)}>
                 <Trash2 className="h-4 w-4" />
               </Button>
             </div>
