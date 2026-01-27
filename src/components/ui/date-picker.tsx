@@ -2,7 +2,6 @@
 
 import * as React from "react"
 import { format, parse, isValid } from "date-fns"
-import { es } from "date-fns/locale"
 import { Calendar as CalendarIcon } from "lucide-react"
 
 import { cn } from "@/lib/utils"
@@ -105,7 +104,6 @@ export function DatePicker({ value, onChange, className, placeholder }: DatePick
           selected={value}
           onSelect={handleCalendarSelect}
           initialFocus
-          locale={es}
           captionLayout="dropdown-buttons"
           fromYear={1970}
           toYear={new Date().getFullYear() + 5}

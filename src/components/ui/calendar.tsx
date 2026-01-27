@@ -1,7 +1,6 @@
 "use client"
 
 import * as React from "react"
-import { es } from "date-fns/locale"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import { DayPicker } from "react-day-picker"
 
@@ -12,12 +11,6 @@ export function Calendar(props: React.ComponentProps<typeof DayPicker>) {
   return (
     <DayPicker
       showOutsideDays
-      weekStartsOn={1}
-      locale={es}
-      formatters={{
-        formatWeekdayName: (day) =>
-          day.toLocaleDateString("es-ES", { weekday: "short" }),
-      }}
       className="p-3"
       classNames={{
         months: "flex flex-col gap-4",
