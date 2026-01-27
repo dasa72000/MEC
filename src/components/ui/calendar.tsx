@@ -27,14 +27,19 @@ export function Calendar(props: React.ComponentProps<typeof DayPicker>) {
         ),
         nav_button_previous: "absolute left-1",
         nav_button_next: "absolute right-1",
-        head_cell:
-          "w-9 text-center font-normal text-[0.8rem] text-muted-foreground",
+
+        // v9 keys
+        weekdays: "w-full",
+        weekday: "w-9 text-center font-normal text-[0.8rem] text-muted-foreground",
+
+        // v8/v7 keys (no estorban si no existen)
+        head_cell: "w-9 text-center font-normal text-[0.8rem] text-muted-foreground",
+
         day: cn(
           buttonVariants({ variant: "ghost" }),
           "h-9 w-9 p-0 font-normal aria-selected:opacity-100"
         ),
-        day_selected:
-          "bg-primary text-primary-foreground hover:bg-primary",
+        day_selected: "bg-primary text-primary-foreground hover:bg-primary",
         day_today: "bg-accent text-accent-foreground",
         day_outside: "text-muted-foreground opacity-50",
         day_disabled: "text-muted-foreground opacity-50",
