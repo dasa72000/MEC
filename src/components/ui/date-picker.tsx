@@ -2,7 +2,7 @@
 
 import * as React from "react"
 import { format, parse, isValid } from "date-fns"
-import { es } from "date-fns/locale/es"
+import { es } from "date-fns/locale"
 import { Calendar as CalendarIcon } from "lucide-react"
 
 import { cn } from "@/lib/utils"
@@ -34,6 +34,10 @@ export function DatePicker({ value, onChange, className, placeholder }: DatePick
       setInputValue("");
     }
   }, [value]);
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue(e.target.value);
+  };
 
   const handleInputBlur = () => {
     const text = inputValue.trim();
