@@ -22,21 +22,12 @@ const MONTHS = Array.from({ length: 12 }, (_, i) => i + 1);
 const DAYS = Array.from({ length: 31 }, (_, i) => i + 1);
 
 export function DateSelector({ value, onChange }: DateSelectorProps) {
-  const [day, setDay] = React.useState<string>("");
-  const [month, setMonth] = React.useState<string>("");
-  const [year, setYear] = React.useState<string>("");
-
-  React.useEffect(() => {
+  const [day, month, year] = React.useMemo(() => {
     if (value && /^\d{2}\/\d{2}\/\d{4}$/.test(value)) {
       const [d, m, y] = value.split("/");
-      setDay(String(Number(d)));
-      setMonth(String(Number(m)));
-      setYear(y);
-    } else if (!value) {
-      setDay("");
-      setMonth("");
-      setYear("");
+      return [String(Number(d)), String(Number(m)), y];
     }
+    return ["", "", ""];
   }, [value]);
 
   const triggerChange = (newDay: string, newMonth: string, newYear: string) => {
@@ -52,22 +43,16 @@ export function DateSelector({ value, onChange }: DateSelectorProps) {
   };
   
   const handleDayChange = (d: string) => {
-    setDay(d);
     triggerChange(d, month, year);
   };
   const handleMonthChange = (m: string) => {
-    setMonth(m);
     triggerChange(day, m, year);
   };
   const handleYearChange = (y: string) => {
-    setYear(y);
     triggerChange(day, month, y);
   };
 
   const handleClear = () => {
-    setDay('');
-    setMonth('');
-    setYear('');
     onChange('');
   };
 
