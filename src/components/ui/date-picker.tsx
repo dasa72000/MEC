@@ -2,6 +2,7 @@
 
 import * as React from "react"
 import { format, parse, isValid } from "date-fns"
+import { es } from "date-fns/locale"
 import { Calendar as CalendarIcon } from "lucide-react"
 
 import { cn } from "@/lib/utils"
@@ -28,7 +29,7 @@ export function DatePicker({ value, onChange, className, placeholder }: DatePick
 
   React.useEffect(() => {
     if (value && isValid(value)) {
-      setInputValue(format(value, dateFormat));
+      setInputValue(format(value, dateFormat, { locale: es }));
     } else {
       setInputValue("");
     }
@@ -54,18 +55,18 @@ export function DatePicker({ value, onChange, className, placeholder }: DatePick
       dateStringToParse = `${text.slice(0, 2)}/${text.slice(2, 4)}/${text.slice(4, 8)}`;
     }
 
-    const parsedDate = parse(dateStringToParse, dateFormat, new Date());
+    const parsedDate = parse(dateStringToParse, dateFormat, new Date(), { locale: es });
 
     if (isValid(parsedDate)) {
       // If date is valid, update the form and format the input
-      setInputValue(format(parsedDate, dateFormat));
+      setInputValue(format(parsedDate, dateFormat, { locale: es }));
       if (!value || value.getTime() !== parsedDate.getTime()) {
         onChange(parsedDate);
       }
     } else {
       // If date is invalid, revert to the last valid value or clear the input
       if (value && isValid(value)) {
-        setInputValue(format(value, dateFormat));
+        setInputValue(format(value, dateFormat, { locale: es }));
       } else {
         setInputValue("");
         onChange(undefined);
@@ -76,7 +77,7 @@ export function DatePicker({ value, onChange, className, placeholder }: DatePick
   const handleCalendarSelect = (selectedDate: Date | undefined) => {
     onChange(selectedDate);
     if (selectedDate && isValid(selectedDate)) {
-      setInputValue(format(selectedDate, dateFormat));
+      setInputValue(format(selectedDate, dateFormat, { locale: es }));
     }
     setPopoverOpen(false);
   };
