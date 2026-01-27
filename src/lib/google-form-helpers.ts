@@ -1,6 +1,5 @@
 "use client";
 
-import { format } from 'date-fns';
 import type { FichaMatrimonialData } from './schema';
 
 const fieldMappings = {
