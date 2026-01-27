@@ -4,10 +4,25 @@ const requiredString = z.string().min(1, "Este campo es requerido.");
 
 const yearSchema = z.coerce.number().int().min(1970, "El año debe ser mayor a 1970").max(2035, "El año debe ser menor a 2035");
 
+const dateString = z.string().optional().refine(val => {
+    if (!val || val.trim() === '') return true; // Let optional and empty strings pass
+    if (!/^\d{2}\/\d{2}\/\d{4}$/.test(val)) return false;
+    const [day, month, year] = val.split('/').map(Number);
+    const d = new Date(year, month - 1, day);
+    return d && d.getFullYear() === year && d.getMonth() === month - 1 && d.getDate() === day;
+}, { message: "Fecha inválida. Use formato dd/mm/yyyy." });
+
+const requiredDateString = z.string().min(1, "Este campo es requerido.").refine(val => {
+    if (!/^\d{2}\/\d{2}\/\d{4}$/.test(val)) return false;
+    const [day, month, year] = val.split('/').map(Number);
+    const d = new Date(year, month - 1, day);
+    return d && d.getFullYear() === year && d.getMonth() === month - 1 && d.getDate() === day;
+}, { message: "Fecha inválida. Use formato dd/mm/yyyy." });
+
 const personSchema = z.object({
   names: requiredString,
   lastNames: requiredString,
-  birthDate: z.date({ required_error: "Este campo es requerido." }).optional(),
+  birthDate: dateString,
   dui: z.string().optional(),
   nit: z.string().optional(),
   occupation: requiredString,
@@ -26,7 +41,7 @@ export const RETREAT_TYPES = [
 ] as const;
 
 const serverRetreatEntrySchema = z.object({
-  date: z.date({ required_error: "Este campo es requerido." }),
+  date: requiredDateString,
   role: requiredString,
   comments: z.string().optional(),
 });
@@ -48,14 +63,14 @@ const secretariatSchema = z.object({
 
 const growthGroupSchema = z.object({
   groupName: requiredString,
-  startDate: z.date({ required_error: "Este campo es requerido." }),
-  endDate: z.date({ required_error: "Este campo es requerido." }),
+  startDate: requiredDateString,
+  endDate: requiredDateString,
   encounter: requiredString,
 });
 
 const growthLadderEntrySchema = z.object({
   name: z.string(),
-  date: z.date().optional(),
+  date: dateString,
 });
 
 export const DEPARTMENTS = [
@@ -82,11 +97,11 @@ export const fichaMatrimonialSchema = z.object({
     community: requiredString,
     country: z.string().optional(),
     affiliation: z.string().optional(),
-    encounterDate: z.date().optional(),
+    encounterDate: dateString,
     belongsToGroup: z.boolean().optional(),
     group: z.string().optional(),
-    civilMarriageDate: z.date().optional(),
-    religiousMarriageDate: z.date().optional(),
+    civilMarriageDate: dateString,
+    religiousMarriageDate: dateString,
   }).refine(data => {
     if (data.belongsToGroup === true && !data.group) {
       return false;

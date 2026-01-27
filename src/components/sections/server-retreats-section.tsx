@@ -6,7 +6,6 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { DatePicker } from "@/components/ui/date-picker";
 import { FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { RETREAT_TYPES, type FichaMatrimonialData } from "@/lib/schema";
@@ -43,7 +42,7 @@ function RetreatTypeSubSection({
                 render={({ field }) => (
                   <FormItem>
                     <FormControl>
-                      <DatePicker value={field.value} onChange={field.onChange} />
+                      <Input placeholder="dd/mm/yyyy" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -79,7 +78,7 @@ function RetreatTypeSubSection({
           type="button"
           variant="outline"
           className="w-full border-dashed"
-          onClick={() => append({ date: undefined, role: "", comments: "" })}
+          onClick={() => append({ date: "", role: "", comments: "" })}
         >
           <PlusCircle className="mr-2 h-4 w-4" />
           Agregar registro

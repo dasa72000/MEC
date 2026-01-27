@@ -5,10 +5,10 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Card, CardContent } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
-import { DatePicker } from "@/components/ui/date-picker";
-import { FormControl, FormField, FormItem, FormLabel } from "@/components/ui/form";
+import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { GROWTH_LADDER_STEPS, type FichaMatrimonialData } from "@/lib/schema";
 import { ClipboardList } from "lucide-react";
+import { Input } from "../ui/input";
 
 interface GrowthLadderSectionProps {
   control: Control<FichaMatrimonialData>;
@@ -58,7 +58,7 @@ export function GrowthLadderSection({ control }: GrowthLadderSectionProps) {
                                       const newValue = [...field.value];
                                       if (checked) {
                                           if (!isChecked) {
-                                            newValue.push({ name: item, date: undefined });
+                                            newValue.push({ name: item, date: '' });
                                           }
                                       } else {
                                           const index = newValue.findIndex((v) => v.name === item);
@@ -73,19 +73,18 @@ export function GrowthLadderSection({ control }: GrowthLadderSectionProps) {
                                 <FormLabel htmlFor={`gl-${item}`} className="font-normal text-sm">{item}</FormLabel>
                             </FormItem>
                             {isChecked && (
-                                <FormControl>
-                                    <DatePicker
-                                        value={field.value[currentItemIndex]?.date}
-                                        onChange={(date) => {
-                                            const newValue = [...field.value];
-                                            newValue[currentItemIndex] = {
-                                                ...newValue[currentItemIndex],
-                                                date: date,
-                                            };
-                                            field.onChange(newValue);
-                                        }}
-                                    />
-                                </FormControl>
+                                <FormField
+                                    control={control}
+                                    name={`growthLadder.${currentItemIndex}.date`}
+                                    render={({ field: dateField }) => (
+                                        <FormItem>
+                                            <FormControl>
+                                                <Input placeholder="dd/mm/yyyy" {...dateField} />
+                                            </FormControl>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
                             )}
                         </Card>
                       );

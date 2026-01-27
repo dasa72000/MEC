@@ -5,7 +5,6 @@ import { useWatch } from "react-hook-form";
 import { Users } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Card, CardContent } from "@/components/ui/card";
-import { DatePicker } from "@/components/ui/date-picker";
 import { FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -82,10 +81,7 @@ export function MarriageDetailsSection({ control }: MarriageDetailsSectionProps)
                                         <FormItem>
                                             <FormLabel>Fecha de Encuentro</FormLabel>
                                             <FormControl>
-                                                <DatePicker
-                                                    value={field.value}
-                                                    onChange={field.onChange}
-                                                />
+                                                <Input placeholder="dd/mm/yyyy" {...field} value={field.value ?? ''} />
                                             </FormControl>
                                             <FormMessage />
                                         </FormItem>
@@ -133,10 +129,7 @@ export function MarriageDetailsSection({ control }: MarriageDetailsSectionProps)
                                         <FormItem>
                                             <FormLabel>Fecha de Boda Civil</FormLabel>
                                             <FormControl>
-                                                <DatePicker
-                                                    value={field.value}
-                                                    onChange={field.onChange}
-                                                />
+                                                <Input placeholder="dd/mm/yyyy" {...field} value={field.value ?? ''} />
                                             </FormControl>
                                             <FormMessage />
                                         </FormItem>
@@ -149,10 +142,7 @@ export function MarriageDetailsSection({ control }: MarriageDetailsSectionProps)
                                         <FormItem>
                                             <FormLabel>Fecha de Boda Religiosa</FormLabel>
                                             <FormControl>
-                                                <DatePicker
-                                                    value={field.value}
-                                                    onChange={field.onChange}
-                                                />
+                                                <Input placeholder="dd/mm/yyyy" {...field} value={field.value ?? ''} />
                                             </FormControl>
                                             <FormMessage />
                                         </FormItem>

@@ -72,18 +72,18 @@ const fieldMappings = {
 };
 
 
-function formatDate(date: Date | undefined): string {
-    if (!date) return '';
-    // Format to YYYY-MM-DD, crucial for Google Forms date fields
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');
+function formatDateForGoogle(dateStr: string | undefined): string {
+    if (!dateStr) return '';
+    const parts = dateStr.split('/');
+    if (parts.length !== 3) return ''; // Invalid format, return empty
+    const [day, month, year] = parts;
+    // Google Forms expects YYYY-MM-DD for date fields
     return `${year}-${month}-${day}`;
 }
 
 function formatServerRetreats(retreats: any[] | undefined): string {
     if (!retreats || retreats.length === 0) return 'No aplica.';
-    return retreats.map(r => `Fecha: ${formatDate(r.date)}, Rol: ${r.role || 'N/A'}, Comentarios: ${r.comments || 'N/A'}`).join('\n');
+    return retreats.map(r => `Fecha: ${r.date || 'N/A'}, Rol: ${r.role || 'N/A'}, Comentarios: ${r.comments || 'N/A'}`).join('\n');
 }
 
 function formatSecretariats(secretariats: any[] | undefined): string {
@@ -93,7 +93,7 @@ function formatSecretariats(secretariats: any[] | undefined): string {
 
 function formatGrowthGroups(groups: any[] | undefined): string {
     if (!groups || groups.length === 0) return 'No aplica.';
-    return groups.map(g => `Grupo: ${g.groupName || 'N/A'}, Desde: ${formatDate(g.startDate)}, Hasta: ${formatDate(g.endDate)}, Enc. No.: ${g.encounter || 'N/A'}`).join('\n');
+    return groups.map(g => `Grupo: ${g.groupName || 'N/A'}, Desde: ${g.startDate || 'N/A'}, Hasta: ${g.endDate || 'N/A'}, Enc. No.: ${g.encounter || 'N/A'}`).join('\n');
 }
 
 export function submitToGoogleForm(data: FichaMatrimonialData) {
@@ -111,15 +111,15 @@ export function submitToGoogleForm(data: FichaMatrimonialData) {
     appendData(fieldMappings.community, data.marriageData.community);
     appendData(fieldMappings.country, data.marriageData.country);
     appendData(fieldMappings.affiliation, data.marriageData.affiliation);
-    appendData(fieldMappings.encounterDate, formatDate(data.marriageData.encounterDate));
-    appendData(fieldMappings.civilMarriageDate, formatDate(data.marriageData.civilMarriageDate));
-    appendData(fieldMappings.religiousMarriageDate, formatDate(data.marriageData.religiousMarriageDate));
+    appendData(fieldMappings.encounterDate, formatDateForGoogle(data.marriageData.encounterDate));
+    appendData(fieldMappings.civilMarriageDate, formatDateForGoogle(data.marriageData.civilMarriageDate));
+    appendData(fieldMappings.religiousMarriageDate, formatDateForGoogle(data.marriageData.religiousMarriageDate));
     appendData(fieldMappings.belongsToGroup, data.marriageData.belongsToGroup ? 'Sí' : 'No');
     appendData(fieldMappings.group, data.marriageData.group);
 
     appendData(fieldMappings.groomNames, data.groomData.names);
     appendData(fieldMappings.groomLastNames, data.groomData.lastNames);
-    appendData(fieldMappings.groomBirthDate, formatDate(data.groomData.birthDate));
+    appendData(fieldMappings.groomBirthDate, formatDateForGoogle(data.groomData.birthDate));
     appendData(fieldMappings.groomDui, data.groomData.dui);
     appendData(fieldMappings.groomNit, data.groomData.nit);
     appendData(fieldMappings.groomOccupation, data.groomData.occupation);
@@ -129,7 +129,7 @@ export function submitToGoogleForm(data: FichaMatrimonialData) {
 
     appendData(fieldMappings.brideNames, data.brideData.names);
     appendData(fieldMappings.brideLastNames, data.brideData.lastNames);
-    appendData(fieldMappings.brideBirthDate, formatDate(data.brideData.birthDate));
+    appendData(fieldMappings.brideBirthDate, formatDateForGoogle(data.brideData.birthDate));
     appendData(fieldMappings.brideDui, data.brideData.dui);
     appendData(fieldMappings.brideNit, data.brideData.nit);
     appendData(fieldMappings.brideOccupation, data.brideData.occupation);
@@ -143,14 +143,14 @@ export function submitToGoogleForm(data: FichaMatrimonialData) {
     appendData(fieldMappings.homePhone, data.address.homePhone);
 
     const growthLadderMap = new Map(data.growthLadder.map(item => [item.name, item.date]));
-    appendData(fieldMappings.growthLadderDialogo, formatDate(growthLadderMap.get('Diálogo')));
-    appendData(fieldMappings.growthLadderRenovacion, formatDate(growthLadderMap.get('Renovación Conyugal')));
-    appendData(fieldMappings.growthLadderFeYConversion, formatDate(growthLadderMap.get('Fe y Conversión')));
-    appendData(fieldMappings.growthLadderEscuela, formatDate(growthLadderMap.get('Escuela de Animadores')));
-    appendData(fieldMappings.growthLadderPastoreo, formatDate(growthLadderMap.get('Pastoreo')));
-    appendData(fieldMappings.growthLadderReencuentro, formatDate(growthLadderMap.get('Reencuentro')));
-    appendData(fieldMappings.growthLadderConvivencia, formatDate(growthLadderMap.get('Convivencia Familiar')));
-    appendData(fieldMappings.growthLadderMesa, formatDate(growthLadderMap.get('Alrededor de la Mesa')));
+    appendData(fieldMappings.growthLadderDialogo, formatDateForGoogle(growthLadderMap.get('Diálogo')));
+    appendData(fieldMappings.growthLadderRenovacion, formatDateForGoogle(growthLadderMap.get('Renovación Conyugal')));
+    appendData(fieldMappings.growthLadderFeYConversion, formatDateForGoogle(growthLadderMap.get('Fe y Conversión')));
+    appendData(fieldMappings.growthLadderEscuela, formatDateForGoogle(growthLadderMap.get('Escuela de Animadores')));
+    appendData(fieldMappings.growthLadderPastoreo, formatDateForGoogle(growthLadderMap.get('Pastoreo')));
+    appendData(fieldMappings.growthLadderReencuentro, formatDateForGoogle(growthLadderMap.get('Reencuentro')));
+    appendData(fieldMappings.growthLadderConvivencia, formatDateForGoogle(growthLadderMap.get('Convivencia Familiar')));
+    appendData(fieldMappings.growthLadderMesa, formatDateForGoogle(growthLadderMap.get('Alrededor de la Mesa')));
 
     appendData(fieldMappings.serverRetreatsEncuentro, formatServerRetreats(data.serverRetreats.Encuentro));
     appendData(fieldMappings.serverRetreatsDialogo, formatServerRetreats(data.serverRetreats.Diálogo));
