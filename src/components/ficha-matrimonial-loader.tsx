@@ -1,8 +1,9 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { I18nProvider } from "react-aria-components";
-import dynamic from "next/dynamic";
+import { FichaMatrimonialForm } from "@/components/ficha-matrimonial-form";
 
 const LoadingSkeleton = () => (
     <div className="space-y-8">
@@ -16,18 +17,21 @@ const LoadingSkeleton = () => (
     </div>
 );
 
-const FichaMatrimonialFormWithNoSSR = dynamic(
-  () => import("@/components/ficha-matrimonial-form").then((mod) => mod.FichaMatrimonialForm),
-  {
-    ssr: false,
-    loading: () => <LoadingSkeleton />,
-  }
-);
 
 export function FichaMatrimonialLoader() {
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  if (!isClient) {
+    return <LoadingSkeleton />;
+  }
+
   return (
     <I18nProvider locale="es">
-      <FichaMatrimonialFormWithNoSSR />
+      <FichaMatrimonialForm />
     </I18nProvider>
   );
 }
