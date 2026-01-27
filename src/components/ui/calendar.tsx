@@ -12,8 +12,8 @@ export function Calendar(props: React.ComponentProps<typeof DayPicker>) {
   return (
     <DayPicker
       locale={es}
+      ISOWeek
       showOutsideDays
-      weekStartsOn={1}
       className="p-3"
       classNames={{
         months: "flex flex-col sm:flex-row space-y-4 sm:space-x-4 sm:space-y-0",
@@ -28,19 +28,16 @@ export function Calendar(props: React.ComponentProps<typeof DayPicker>) {
         nav_button_previous: "absolute left-1",
         nav_button_next: "absolute right-1",
         head_cell:
-          "text-muted-foreground rounded-md w-9 font-normal text-[0.8rem]",
+          "w-9 text-center font-normal text-[0.8rem] text-muted-foreground",
         day: cn(
           buttonVariants({ variant: "ghost" }),
           "h-9 w-9 p-0 font-normal aria-selected:opacity-100"
         ),
         day_selected:
-          "bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground focus:bg-primary focus:text-primary-foreground",
+          "bg-primary text-primary-foreground hover:bg-primary",
         day_today: "bg-accent text-accent-foreground",
         day_outside: "text-muted-foreground opacity-50",
         day_disabled: "text-muted-foreground opacity-50",
-        day_range_middle:
-          "aria-selected:bg-accent aria-selected:text-accent-foreground",
-        day_hidden: "invisible",
       }}
       components={{
         IconLeft: () => <ChevronLeft className="h-4 w-4" />,
