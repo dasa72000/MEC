@@ -96,7 +96,6 @@ export function GrowthGroupsSection({ control }: GrowthGroupsSectionProps) {
                                 <DatePicker
                                   value={field.value}
                                   onChange={field.onChange}
-                                  placeholder="Desde"
                                 />
                               </FormControl>
                               <FormMessage />
@@ -112,7 +111,6 @@ export function GrowthGroupsSection({ control }: GrowthGroupsSectionProps) {
                                 <DatePicker
                                   value={field.value}
                                   onChange={field.onChange}
-                                  placeholder="Hasta"
                                 />
                               </FormControl>
                               <FormMessage />

@@ -84,7 +84,6 @@ export function GrowthLadderSection({ control }: GrowthLadderSectionProps) {
                                             };
                                             field.onChange(newValue);
                                         }}
-                                        placeholder="Ingresar fecha"
                                     />
                                 </FormControl>
                             )}
