@@ -50,7 +50,6 @@ const fieldMappings = {
   growthLadderPastoreo: 'entry.721247053',
   growthLadderReencuentro: 'entry.1145015679',
   growthLadderConvivencia: 'entry.1502870648',
-  growthLadderMesa: 'entry.977902280',
 
   // Retiros como Servidores
   serverRetreatsEncuentro: 'entry.14539237',
@@ -88,7 +87,7 @@ function formatServerRetreats(retreats: any[] | undefined): string {
 
 function formatSecretariats(secretariats: any[] | undefined): string {
     if (!secretariats || secretariats.length === 0) return 'No aplica.';
-    return secretariats.map(s => `Secretaría: ${s.name || 'N/A'}, Año: ${s.year || 'N/A'}`).join('\n');
+    return secretariats.map(s => `Secretaría: ${s.name || 'N/A'}, Período: ${s.startYear || 'N/A'} - ${s.endYear || 'Presente'}`).join('\n');
 }
 
 function formatGrowthGroups(groups: any[] | undefined): string {
@@ -150,7 +149,6 @@ export function submitToGoogleForm(data: FichaMatrimonialData) {
     appendData(fieldMappings.growthLadderPastoreo, formatDateForGoogle(growthLadderMap.get('Pastoreo')));
     appendData(fieldMappings.growthLadderReencuentro, formatDateForGoogle(growthLadderMap.get('Reencuentro')));
     appendData(fieldMappings.growthLadderConvivencia, formatDateForGoogle(growthLadderMap.get('Convivencia Familiar')));
-    appendData(fieldMappings.growthLadderMesa, formatDateForGoogle(growthLadderMap.get('Alrededor de la Mesa')));
 
     appendData(fieldMappings.serverRetreatsEncuentro, formatServerRetreats(data.serverRetreats.Encuentro));
     appendData(fieldMappings.serverRetreatsDialogo, formatServerRetreats(data.serverRetreats.Diálogo));

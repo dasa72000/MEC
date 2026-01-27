@@ -48,7 +48,7 @@ export function SecretariatsSection({ control }: SecretariatsSectionProps) {
                 <h4 className="text-sm font-medium mb-4">Secretarías o Áreas de Servicio</h4>
                 <div className="space-y-4">
                   {fields.map((field, index) => (
-                    <div key={field.id} className="grid grid-cols-[1fr,auto,auto] gap-2 items-center">
+                    <div key={field.id} className="grid grid-cols-[1fr,auto,auto,auto] gap-2 items-center">
                       <FormField
                         control={control}
                         name={`secretariats.${index}.name`}
@@ -63,11 +63,23 @@ export function SecretariatsSection({ control }: SecretariatsSectionProps) {
                       />
                       <FormField
                         control={control}
-                        name={`secretariats.${index}.year`}
+                        name={`secretariats.${index}.startYear`}
                         render={({ field }) => (
                           <FormItem>
                             <FormControl>
-                              <Input type="number" placeholder="Año" {...field} className="w-28"/>
+                              <Input type="number" placeholder="Año inicio" {...field} value={field.value ?? ''} className="w-28"/>
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      <FormField
+                        control={control}
+                        name={`secretariats.${index}.endYear`}
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormControl>
+                              <Input type="number" placeholder="Año fin" {...field} value={field.value ?? ''} className="w-28"/>
                             </FormControl>
                             <FormMessage />
                           </FormItem>
@@ -89,7 +101,7 @@ export function SecretariatsSection({ control }: SecretariatsSectionProps) {
                   type="button"
                   variant="outline"
                   className="w-full mt-4 border-dashed"
-                  onClick={() => append({ name: "", year: new Date().getFullYear() })}
+                  onClick={() => append({ name: "", startYear: new Date().getFullYear(), endYear: "" })}
                 >
                   <PlusCircle className="mr-2 h-4 w-4" />
                   Agregar secretaría

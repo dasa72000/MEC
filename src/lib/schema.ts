@@ -58,7 +58,20 @@ const serverRetreatsSchema = z.object({
 
 const secretariatSchema = z.object({
   name: requiredString,
-  year: yearSchema,
+  startYear: yearSchema,
+  endYear: z.string().optional(),
+}).refine(data => {
+    if (data.endYear && data.endYear.length > 0) {
+        const end = Number(data.endYear);
+        if (isNaN(end) || end < 1970 || end > 2035) {
+            return false;
+        }
+        return end >= data.startYear;
+    }
+    return true;
+}, {
+    message: "Año fin inválido o menor que el año de inicio.",
+    path: ["endYear"],
 });
 
 const growthGroupSchema = z.object({
@@ -137,5 +150,4 @@ export const GROWTH_LADDER_STEPS = [
   "Pastoreo",
   "Reencuentro",
   "Convivencia Familiar",
-  "Alrededor de la Mesa",
 ];
