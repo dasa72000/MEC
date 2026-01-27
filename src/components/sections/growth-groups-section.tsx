@@ -18,6 +18,7 @@ import {
   FormControl,
   FormField,
   FormItem,
+  FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
@@ -70,68 +71,83 @@ export function GrowthGroupsSection({ control }: GrowthGroupsSectionProps) {
                     {fields.map((field, index) => (
                       <div
                         key={field.id}
-                        className="grid grid-cols-1 md:grid-cols-[2fr,1fr,1fr,1fr,auto] gap-2 items-start"
+                        className="p-4 border rounded-lg relative bg-background/50"
                       >
-                        <FormField
-                          control={control}
-                          name={`growthGroups.${index}.groupName`}
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormControl>
-                                <Input
-                                  placeholder="Nombre del grupo"
-                                  {...field}
-                                />
-                              </FormControl>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                        <FormField
-                          control={control}
-                          name={`growthGroups.${index}.startDate`}
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormControl>
-                                <DateSelector value={field.value} onChange={field.onChange} />
-                              </FormControl>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                        <FormField
-                          control={control}
-                          name={`growthGroups.${index}.endDate`}
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormControl>
-                                <DateSelector value={field.value} onChange={field.onChange} />
-                              </FormControl>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                        <FormField
-                          control={control}
-                          name={`growthGroups.${index}.encounter`}
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormControl>
-                                <Input placeholder="Enc. No." {...field} />
-                              </FormControl>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
                         <Button
                           type="button"
                           variant="ghost"
                           size="icon"
-                          className="text-destructive hover:bg-destructive/10"
+                          className="absolute top-2 right-2 text-destructive hover:bg-destructive/10"
                           onClick={() => remove(index)}
                         >
                           <X className="h-4 w-4" />
                         </Button>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4">
+                          <FormField
+                            control={control}
+                            name={`growthGroups.${index}.groupName`}
+                            render={({ field }) => (
+                              <FormItem>
+                                <FormLabel>Nombre del Grupo</FormLabel>
+                                <FormControl>
+                                  <Input
+                                    placeholder="Nombre del grupo"
+                                    {...field}
+                                  />
+                                </FormControl>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                          <FormField
+                            control={control}
+                            name={`growthGroups.${index}.encounter`}
+                            render={({ field }) => (
+                              <FormItem>
+                                <FormLabel>Encuentro No.</FormLabel>
+                                <FormControl>
+                                  <Input
+                                    placeholder="Escriba el número"
+                                    {...field}
+                                  />
+                                </FormControl>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                          <FormField
+                            control={control}
+                            name={`growthGroups.${index}.startDate`}
+                            render={({ field }) => (
+                              <FormItem>
+                                <FormLabel>Fecha Inicio</FormLabel>
+                                <FormControl>
+                                  <DateSelector
+                                    value={field.value}
+                                    onChange={field.onChange}
+                                  />
+                                </FormControl>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                          <FormField
+                            control={control}
+                            name={`growthGroups.${index}.endDate`}
+                            render={({ field }) => (
+                              <FormItem>
+                                <FormLabel>Fecha Fin</FormLabel>
+                                <FormControl>
+                                  <DateSelector
+                                    value={field.value}
+                                    onChange={field.onChange}
+                                  />
+                                </FormControl>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                        </div>
                       </div>
                     ))}
                   </div>
