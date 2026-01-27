@@ -2,7 +2,6 @@
 
 import dynamic from "next/dynamic";
 import { Skeleton } from "@/components/ui/skeleton";
-import { I18nProvider } from "react-aria-components";
 
 const FichaMatrimonialForm = dynamic(
   () => import('@/components/ficha-matrimonial-form').then(mod => mod.FichaMatrimonialForm),
@@ -25,9 +24,5 @@ const LoadingSkeleton = () => (
 );
 
 export function FichaMatrimonialLoader() {
-  return (
-    <I18nProvider locale="es">
-      <FichaMatrimonialForm />
-    </I18nProvider>
-  );
+  return <FichaMatrimonialForm />;
 }
