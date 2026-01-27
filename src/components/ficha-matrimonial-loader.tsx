@@ -3,8 +3,8 @@
 import dynamic from "next/dynamic";
 import { Skeleton } from "@/components/ui/skeleton";
 
-const FichaMatrimonialForm = dynamic(
-  () => import('@/components/ficha-matrimonial-form').then(mod => mod.FichaMatrimonialForm),
+const FichaMatrimonialClientWrapper = dynamic(
+  () => import('@/components/ficha-matrimonial-client-wrapper').then(mod => mod.FichaMatrimonialClientWrapper),
   {
     ssr: false,
     loading: () => (
@@ -23,5 +23,5 @@ const FichaMatrimonialForm = dynamic(
 
 
 export function FichaMatrimonialLoader() {
-  return <FichaMatrimonialForm />;
+  return <FichaMatrimonialClientWrapper />;
 }
