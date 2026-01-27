@@ -1,12 +1,12 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { ChevronLeft, ChevronRight } from "lucide-react"
-import { DayPicker } from "react-day-picker"
-import { es } from "date-fns/locale"
+import * as React from "react";
+import { DayPicker } from "react-day-picker";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import { es } from "date-fns/locale";
 
-import { cn } from "@/lib/utils"
-import { buttonVariants } from "@/components/ui/button"
+import { cn } from "@/lib/utils";
+import { buttonVariants } from "@/components/ui/button";
 
 export function Calendar(props: React.ComponentProps<typeof DayPicker>) {
   return (
@@ -16,11 +16,12 @@ export function Calendar(props: React.ComponentProps<typeof DayPicker>) {
       showOutsideDays
       className="p-3"
       classNames={{
-        months: "flex flex-col sm:flex-row space-y-4 sm:space-x-4 sm:space-y-0",
+        months: "flex flex-col gap-4",
         month: "space-y-4",
-        caption: "flex justify-center pt-1 relative items-center",
+
+        caption: "relative flex items-center justify-center",
         caption_label: "text-sm font-medium",
-        nav: "space-x-1 flex items-center",
+        nav: "flex items-center gap-1",
         nav_button: cn(
           buttonVariants({ variant: "outline" }),
           "h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100"
@@ -28,18 +29,19 @@ export function Calendar(props: React.ComponentProps<typeof DayPicker>) {
         nav_button_previous: "absolute left-1",
         nav_button_next: "absolute right-1",
 
-        // v9 keys
-        weekdays: "w-full",
-        weekday: "w-9 text-center font-normal text-[0.8rem] text-muted-foreground",
+        table: "w-full border-collapse",
+        head_row: "",
+        head_cell:
+          "w-9 text-center font-normal text-xs text-muted-foreground",
 
-        // v8/v7 keys (no estorban si no existen)
-        head_cell: "w-9 text-center font-normal text-[0.8rem] text-muted-foreground",
+        row: "",
+        cell: "w-9 h-9 text-center p-0",
 
         day: cn(
           buttonVariants({ variant: "ghost" }),
-          "h-9 w-9 p-0 font-normal aria-selected:opacity-100"
+          "h-9 w-9 p-0 font-normal"
         ),
-        day_selected: "bg-primary text-primary-foreground hover:bg-primary",
+        day_selected: "bg-primary text-primary-foreground",
         day_today: "bg-accent text-accent-foreground",
         day_outside: "text-muted-foreground opacity-50",
         day_disabled: "text-muted-foreground opacity-50",
@@ -50,5 +52,5 @@ export function Calendar(props: React.ComponentProps<typeof DayPicker>) {
       }}
       {...props}
     />
-  )
+  );
 }

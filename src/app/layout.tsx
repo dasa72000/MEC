@@ -1,4 +1,3 @@
-import "react-day-picker/style.css";
 import './globals.css';
 import type {Metadata} from 'next';
 import { Toaster } from "@/components/ui/toaster";
