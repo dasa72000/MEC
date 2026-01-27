@@ -19,9 +19,10 @@ type DatePickerProps = {
   value: Date | undefined
   onChange: (date: Date | undefined) => void
   className?: string
+  placeholder?: string
 }
 
-export function DatePicker({ value, onChange, className }: DatePickerProps) {
+export function DatePicker({ value, onChange, className, placeholder }: DatePickerProps) {
   const [inputValue, setInputValue] = React.useState<string>("");
   const [popoverOpen, setPopoverOpen] = React.useState(false);
   const dateFormat = "dd/MM/yyyy";
@@ -90,7 +91,7 @@ export function DatePicker({ value, onChange, className }: DatePickerProps) {
           value={inputValue}
           onChange={handleInputChange}
           onBlur={handleInputBlur}
-          placeholder="dd/mm/yyyy"
+          placeholder={placeholder || "dd/mm/yyyy"}
         />
         <PopoverTrigger asChild>
           <Button variant={"ghost"} className="absolute right-0 h-full p-2 text-muted-foreground hover:text-foreground">
