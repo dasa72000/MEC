@@ -1,15 +1,9 @@
 "use client";
 
-import dynamic from "next/dynamic";
+import { useState, useEffect } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
-
-const FichaMatrimonialForm = dynamic(
-  () => import('@/components/ficha-matrimonial-form').then(mod => mod.FichaMatrimonialForm),
-  { 
-    ssr: false,
-    loading: () => <LoadingSkeleton />,
-  }
-);
+import { FichaMatrimonialForm } from "@/components/ficha-matrimonial-form";
+import { I18nProvider } from "react-aria-components";
 
 const LoadingSkeleton = () => (
   <div className="space-y-8">
@@ -24,5 +18,22 @@ const LoadingSkeleton = () => (
 );
 
 export function FichaMatrimonialLoader() {
-  return <FichaMatrimonialForm />;
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    // This effect runs only on the client, after the initial render
+    setIsClient(true);
+  }, []);
+
+  // On the server and during the initial client render, show the skeleton
+  if (!isClient) {
+    return <LoadingSkeleton />;
+  }
+
+  // Once the component has mounted on the client, render the actual form
+  return (
+    <I18nProvider locale="es">
+      <FichaMatrimonialForm />
+    </I18nProvider>
+  );
 }
