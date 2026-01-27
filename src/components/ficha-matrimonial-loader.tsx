@@ -3,11 +3,11 @@
 import dynamic from "next/dynamic";
 import { Skeleton } from "@/components/ui/skeleton";
 import { I18nProvider } from "react-aria-components";
-import { useEffect, useState } from "react";
 
 const FichaMatrimonialForm = dynamic(
   () => import('@/components/ficha-matrimonial-form').then(mod => mod.FichaMatrimonialForm),
   { 
+    ssr: false,
     loading: () => <LoadingSkeleton />,
   }
 );
@@ -25,16 +25,6 @@ const LoadingSkeleton = () => (
 );
 
 export function FichaMatrimonialLoader() {
-  const [isClient, setIsClient] = useState(false);
-
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
-
-  if (!isClient) {
-    return <LoadingSkeleton />;
-  }
-
   return (
     <I18nProvider locale="es">
       <FichaMatrimonialForm />
