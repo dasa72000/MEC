@@ -47,7 +47,7 @@ function RetreatTypeSubSection({
               >
                 <X className="h-4 w-4" />
               </Button>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4">
+              <div className="grid grid-cols-1 gap-y-4">
                 <FormField
                   control={control}
                   name={`serverRetreats.${retreatType}.${index}.role`}
@@ -72,19 +72,17 @@ function RetreatTypeSubSection({
                     </FormItem>
                   )}
                 />
-                <div className="md:col-span-2">
-                  <FormField
-                    control={control}
-                    name={`serverRetreats.${retreatType}.${index}.comments`}
-                    render={({ field: commentsField }) => (
-                      <FormItem>
-                        <FormLabel>Comentarios</FormLabel>
-                        <FormControl><Textarea placeholder="Comentarios adicionales" className="min-h-[80px]" {...commentsField} value={commentsField.value || ''} /></FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
+                <FormField
+                  control={control}
+                  name={`serverRetreats.${retreatType}.${index}.comments`}
+                  render={({ field: commentsField }) => (
+                    <FormItem>
+                      <FormLabel>Comentarios</FormLabel>
+                      <FormControl><Textarea placeholder="Comentarios adicionales" className="min-h-[80px]" {...commentsField} value={commentsField.value || ''} /></FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
               </div>
             </div>
           ))}
