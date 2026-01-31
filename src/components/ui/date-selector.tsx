@@ -36,8 +36,11 @@ export function DateSelector({ value, onChange }: DateSelectorProps) {
   const [month, setMonth] = React.useState(() => getPartsFromValue(value)[1]);
   const [year, setYear] = React.useState(() => getPartsFromValue(value)[2]);
 
+  // Ref to hold the latest `value` from props to avoid including it in the effect dependency array
+  const valueRef = React.useRef(value);
+  valueRef.current = value;
+
   // Sync state down from `value` prop, e.g., on form reset.
-  // It ignores 'PARTIAL' to avoid wiping the user's partial input.
   React.useEffect(() => {
     if (value !== 'PARTIAL') {
         const [d, m, y] = getPartsFromValue(value);
@@ -50,26 +53,25 @@ export function DateSelector({ value, onChange }: DateSelectorProps) {
   // Report state up to react-hook-form when any part changes.
   React.useEffect(() => {
     const newCompleteDate = day && month && year ? `${String(day).padStart(2, '0')}/${String(month).padStart(2, '0')}/${year}` : null;
+    const currentValue = valueRef.current;
     
     if (newCompleteDate) {
         // If a complete date is formed, report it if it's different.
-        if (newCompleteDate !== value) {
+        if (newCompleteDate !== currentValue) {
             onChange(newCompleteDate);
         }
     } else if (day || month || year) {
         // If date is partially filled, report 'PARTIAL' for validation.
-        if (value !== 'PARTIAL') {
+        if (currentValue !== 'PARTIAL') {
             onChange('PARTIAL');
         }
     } else {
         // If all parts are empty, report empty string.
-        if (value !== '') {
+        if (currentValue) { // only call if there is a value to clear
             onChange('');
         }
     }
-  // Adding `onChange` and `value` to dependency array to follow linting rules and handle edge cases.
-  // The guards inside the effect prevent infinite loops.
-  }, [day, month, year, onChange, value]);
+  }, [day, month, year, onChange]);
 
   const handleClear = () => {
     setDay('');
