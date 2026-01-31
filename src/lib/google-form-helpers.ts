@@ -58,6 +58,8 @@ const fieldMappings = {
   serverRetreatsReencuentro: 'entry.1212632899',
   serverRetreatsRenovacion: 'entry.94533679',
   serverRetreatsEscuela: 'entry.1825921011',
+  serverRetreatsPastoreo: 'entry.TODO_PASTOREO_ID',
+  serverRetreatsConvivenciaFamiliar: 'entry.TODO_CONVIVENCIA_ID',
   
   // Secretarías y Asamblea
   secretariats: 'entry.1828306218',
@@ -166,6 +168,8 @@ export function submitToGoogleForm(data: FichaMatrimonialData) {
     appendData(fieldMappings.serverRetreatsReencuentro, formatServerRetreats(data.serverRetreats.Reencuentro));
     appendData(fieldMappings.serverRetreatsRenovacion, formatServerRetreats(data.serverRetreats['Renovación Conyugal']));
     appendData(fieldMappings.serverRetreatsEscuela, formatServerRetreats(data.serverRetreats['Escuela de Animadores']));
+    appendData(fieldMappings.serverRetreatsPastoreo, formatServerRetreats(data.serverRetreats['Servicios en Pastoreo']));
+    appendData(fieldMappings.serverRetreatsConvivenciaFamiliar, formatServerRetreats(data.serverRetreats['Servicios en Convivencia Familiar']));
     
     appendData(fieldMappings.secretariats, formatSecretariats(data.secretariats));
     appendData(fieldMappings.attendsGeneralAssembly, data.attendsGeneralAssembly ? 'Sí' : 'No');

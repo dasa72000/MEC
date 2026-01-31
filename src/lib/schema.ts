@@ -39,7 +39,9 @@ export const RETREAT_TYPES = [
     "Fe y Conversión",
     "Reencuentro",
     "Renovación Conyugal",
-    "Escuela de Animadores"
+    "Escuela de Animadores",
+    "Servicios en Pastoreo",
+    "Servicios en Convivencia Familiar"
 ] as const;
 
 const serverRetreatEntrySchema = z.object({
@@ -64,6 +66,8 @@ const serverRetreatsSchema = z.object({
     Reencuentro: z.array(serverRetreatEntrySchema).optional(),
     "Renovación Conyugal": z.array(serverRetreatEntrySchema).optional(),
     "Escuela de Animadores": z.array(serverRetreatEntrySchema).optional(),
+    "Servicios en Pastoreo": z.array(serverRetreatEntrySchema).optional(),
+    "Servicios en Convivencia Familiar": z.array(serverRetreatEntrySchema).optional(),
 }).default({});
 
 
