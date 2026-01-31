@@ -35,7 +35,7 @@ export function FichaMatrimonialForm() {
         encounterNumber: '',
         community: '',
         country: 'El Salvador',
-        affiliation: 'Católica',
+        affiliationNumber: '',
         encounterDate: '',
         civilMarriageDate: '',
         religiousMarriageDate: '',

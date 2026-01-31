@@ -47,13 +47,15 @@ const serverRetreatEntrySchema = z.object({
   role: z.string().optional(),
   comments: z.string().optional(),
 }).refine((data) => {
-    const hasValue = data.role || data.comments || (data.date && data.date !== '');
+    const hasValue = data.role || data.comments;
     if (!hasValue) return true;
+    // if you start filling, then role is required
     return data.role && data.role !== '';
 }, {
-    message: "El rol es requerido.",
+    message: "El rol es requerido si se ingresan comentarios o fecha.",
     path: ['role'],
 });
+
 
 const serverRetreatsSchema = z.object({
     Encuentro: z.array(serverRetreatEntrySchema).optional(),
@@ -118,7 +120,7 @@ export const fichaMatrimonialSchema = z.object({
     encounterNumber: requiredString,
     community: requiredString,
     country: z.string().optional(),
-    affiliation: z.string().optional(),
+    affiliationNumber: z.string().optional(),
     encounterDate: dateString,
     belongsToGroup: z.boolean().optional(),
     group: z.string().optional(),

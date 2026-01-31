@@ -7,7 +7,7 @@ const fieldMappings = {
   encounterNumber: 'entry.1583014279',
   community: 'entry.1088149683',
   country: 'entry.791191831',
-  affiliation: 'entry.553504835',
+  affiliationNumber: 'entry.553504835',
   encounterDate: 'entry.1308011902',
   civilMarriageDate: 'entry.1705889295',
   religiousMarriageDate: 'entry.2019193873',
@@ -109,7 +109,7 @@ export function submitToGoogleForm(data: FichaMatrimonialData) {
     appendData(fieldMappings.encounterNumber, data.marriageData.encounterNumber);
     appendData(fieldMappings.community, data.marriageData.community);
     appendData(fieldMappings.country, data.marriageData.country);
-    appendData(fieldMappings.affiliation, data.marriageData.affiliation);
+    appendData(fieldMappings.affiliationNumber, data.marriageData.affiliationNumber);
     appendData(fieldMappings.encounterDate, formatDateForGoogle(data.marriageData.encounterDate));
     appendData(fieldMappings.civilMarriageDate, formatDateForGoogle(data.marriageData.civilMarriageDate));
     appendData(fieldMappings.religiousMarriageDate, formatDateForGoogle(data.marriageData.religiousMarriageDate));

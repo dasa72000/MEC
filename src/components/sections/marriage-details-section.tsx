@@ -101,8 +101,6 @@ export function MarriageDetailsSection({ control }: MarriageDetailsSectionProps)
                                                     </SelectTrigger>
                                                 </FormControl>
                                                 <SelectContent>
-                                                    <SelectItem value="Guatemala">Guatemala</SelectItem>
-                                                    <SelectItem value="Mexico">Mexico</SelectItem>
                                                     <SelectItem value="El Salvador">El Salvador</SelectItem>
                                                 </SelectContent>
                                             </Select>
@@ -112,12 +110,12 @@ export function MarriageDetailsSection({ control }: MarriageDetailsSectionProps)
                                 />
                                 <FormField
                                     control={control}
-                                    name="marriageData.affiliation"
+                                    name="marriageData.affiliationNumber"
                                     render={({ field }) => (
                                         <FormItem>
-                                            <FormLabel>Afiliación</FormLabel>
+                                            <FormLabel>Numero de Afiliado</FormLabel>
                                             <FormControl>
-                                                <Input placeholder="as" {...field} />
+                                                <Input placeholder="Número" {...field} />
                                             </FormControl>
                                             <FormMessage />
                                         </FormItem>
