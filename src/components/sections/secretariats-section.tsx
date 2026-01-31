@@ -28,7 +28,7 @@ export function SecretariatsSection({ control }: SecretariatsSectionProps) {
   });
 
   return (
-    <Card>
+    <Card id="secretariats-section">
       <Accordion type="single" collapsible defaultValue="item-1" className="w-full">
         <AccordionItem value="item-1" className="border-b-0">
           <AccordionTrigger className="p-6 hover:no-underline">

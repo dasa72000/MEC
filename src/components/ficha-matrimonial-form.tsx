@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, type FieldErrors } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2 } from "lucide-react";
 
@@ -26,6 +26,7 @@ import { submitToGoogleForm } from "@/lib/google-form-helpers";
 
 export function FichaMatrimonialForm() {
   const [isLoading, setIsLoading] = useState(false);
+  const [activeTab, setActiveTab] = useState('groom');
   const { toast } = useToast();
 
   const form = useForm<FichaMatrimonialData>({
@@ -78,7 +79,7 @@ export function FichaMatrimonialForm() {
       observations: '',
     },
   });
-
+  
   function onSubmit(data: FichaMatrimonialData) {
     setIsLoading(true);
     try {
@@ -101,12 +102,65 @@ export function FichaMatrimonialForm() {
     }
   }
 
+  const onInvalid = (errors: FieldErrors<FichaMatrimonialData>) => {
+    const topLevelErrorKey = Object.keys(errors)[0] as keyof FichaMatrimonialData | 'groomData' | 'brideData';
+    
+    let sectionId: string | null = null;
+
+    if (topLevelErrorKey === 'marriageData') {
+      sectionId = 'marriage-details-section';
+    } else if (topLevelErrorKey === 'groomData') {
+      sectionId = 'person-details-section';
+      setActiveTab('groom');
+    } else if (topLevelErrorKey === 'brideData') {
+      sectionId = 'person-details-section';
+      setActiveTab('bride');
+    } else if (topLevelErrorKey === 'address') {
+      sectionId = 'address-section';
+    } else if (topLevelErrorKey === 'growthLadder') {
+      sectionId = 'growth-ladder-section';
+    } else if (topLevelErrorKey === 'serverRetreats') {
+      sectionId = 'server-retreats-section';
+    } else if (topLevelErrorKey === 'secretariats' || topLevelErrorKey === 'attendsGeneralAssembly') {
+      sectionId = 'secretariats-section';
+    } else if (topLevelErrorKey === 'growthGroups') {
+      sectionId = 'growth-groups-section';
+    } else if (topLevelErrorKey === 'observations') {
+      sectionId = 'observations-section';
+    }
+
+    if (sectionId) {
+      const sectionElement = document.getElementById(sectionId);
+      if (sectionElement) {
+        const trigger = sectionElement.querySelector<HTMLButtonElement>('[data-radix-collection-item]');
+        
+        if (trigger && trigger.getAttribute('data-state') === 'closed') {
+          trigger.click();
+        }
+
+        setTimeout(() => {
+          sectionElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }, 250); 
+      }
+    }
+
+    toast({
+        variant: "destructive",
+        title: "❌ Formulario incompleto",
+        description: "Por favor, revisa los campos marcados en rojo.",
+    });
+  };
+
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+      <form onSubmit={form.handleSubmit(onSubmit, onInvalid)} className="space-y-8">
         <MarriageDetailsSection control={form.control} />
 
-        <PersonDetailsSection control={form.control} />
+        <PersonDetailsSection 
+          control={form.control} 
+          activeTab={activeTab}
+          onTabChange={setActiveTab}
+        />
 
         <AddressSection control={form.control} />
 

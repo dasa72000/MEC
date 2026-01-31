@@ -20,7 +20,7 @@ interface ObservationsSectionProps {
 
 export function ObservationsSection({ control }: ObservationsSectionProps) {
   return (
-    <Card>
+    <Card id="observations-section">
       <Accordion type="single" collapsible defaultValue="item-1" className="w-full">
         <AccordionItem value="item-1" className="border-b-0">
           <AccordionTrigger className="p-6 hover:no-underline">

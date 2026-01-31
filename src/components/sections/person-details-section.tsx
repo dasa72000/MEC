@@ -12,6 +12,8 @@ import { DateSelector } from "../ui/date-selector";
 
 interface PersonDetailsSectionProps {
     control: Control<FichaMatrimonialData>;
+    activeTab: string;
+    onTabChange: (value: string) => void;
 }
 
 function PersonFormFields({ control, personType }: { control: Control<FichaMatrimonialData>, personType: 'groomData' | 'brideData' }) {
@@ -34,9 +36,9 @@ function PersonFormFields({ control, personType }: { control: Control<FichaMatri
     );
 }
 
-export function PersonDetailsSection({ control }: PersonDetailsSectionProps) {
+export function PersonDetailsSection({ control, activeTab, onTabChange }: PersonDetailsSectionProps) {
     return (
-        <Card>
+        <Card id="person-details-section">
             <Accordion type="single" collapsible defaultValue="item-1" className="w-full">
                 <AccordionItem value="item-1" className="border-b-0">
                     <AccordionTrigger className="p-6 hover:no-underline">
@@ -52,10 +54,10 @@ export function PersonDetailsSection({ control }: PersonDetailsSectionProps) {
                     </AccordionTrigger>
                     <AccordionContent>
                         <CardContent className="pt-0">
-                            <Tabs defaultValue="groom" className="w-full">
+                            <Tabs value={activeTab} onValueChange={onTabChange} className="w-full">
                                 <TabsList className="grid w-full grid-cols-2">
-                                    <TabsTrigger value="groom">👨 Él</TabsTrigger>
-                                    <TabsTrigger value="bride">👩 Ella</TabsTrigger>
+                                    <TabsTrigger value="groom" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">👨 Él</TabsTrigger>
+                                    <TabsTrigger value="bride" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">👩 Ella</TabsTrigger>
                                 </TabsList>
                                 <TabsContent value="groom" className="pt-6">
                                     <PersonFormFields control={control} personType="groomData" />

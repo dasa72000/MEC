@@ -37,7 +37,7 @@ export function GrowthGroupsSection({ control }: GrowthGroupsSectionProps) {
   });
 
   return (
-    <Card>
+    <Card id="growth-groups-section">
       <Accordion
         type="single"
         collapsible

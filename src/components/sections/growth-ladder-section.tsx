@@ -16,7 +16,7 @@ interface GrowthLadderSectionProps {
 
 export function GrowthLadderSection({ control }: GrowthLadderSectionProps) {
   return (
-    <Card>
+    <Card id="growth-ladder-section">
       <Accordion type="single" collapsible defaultValue="item-1" className="w-full">
         <AccordionItem value="item-1" className="border-b-0">
           <AccordionTrigger className="p-6 hover:no-underline">
