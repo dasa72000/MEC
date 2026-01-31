@@ -15,7 +15,7 @@ import { Input } from "@/components/ui/input";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Separator } from "@/components/ui/separator";
 import type { FichaMatrimonialData } from "@/lib/schema";
-import { Briefcase, PlusCircle, Trash2 } from "lucide-react";
+import { Briefcase, PlusCircle, X } from "lucide-react";
 
 interface SecretariatsSectionProps {
   control: Control<FichaMatrimonialData>;
@@ -48,52 +48,59 @@ export function SecretariatsSection({ control }: SecretariatsSectionProps) {
                 <h4 className="text-sm font-medium mb-4">Secretarías o Áreas de Servicio</h4>
                 <div className="space-y-4">
                   {fields.map((field, index) => (
-                    <div key={field.id} className="grid grid-cols-[1fr,auto,auto,auto] gap-2 items-center">
-                      <FormField
-                        control={control}
-                        name={`secretariats.${index}.name`}
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormControl>
-                              <Input placeholder="Nombre de la secretaría o área" {...field} />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                      <FormField
-                        control={control}
-                        name={`secretariats.${index}.startYear`}
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormControl>
-                              <Input type="number" placeholder="Año inicio" {...field} value={field.value ?? ''} className="w-28"/>
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                      <FormField
-                        control={control}
-                        name={`secretariats.${index}.endYear`}
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormControl>
-                              <Input type="number" placeholder="Año fin" {...field} value={field.value ?? ''} className="w-28"/>
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
+                    <div key={field.id} className="p-4 border rounded-lg relative bg-background/50">
                       <Button
                         type="button"
                         variant="ghost"
                         size="icon"
-                        className="text-destructive hover:bg-destructive/10"
+                        className="absolute top-2 right-2 text-destructive hover:bg-destructive/10"
                         onClick={() => remove(index)}
                       >
-                        <Trash2 className="h-4 w-4" />
+                        <X className="h-4 w-4" />
                       </Button>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4 pt-2">
+                          <div className="md:col-span-2">
+                              <FormField
+                                  control={control}
+                                  name={`secretariats.${index}.name`}
+                                  render={({ field }) => (
+                                  <FormItem>
+                                      <FormLabel>Secretaría o Área</FormLabel>
+                                      <FormControl>
+                                        <Input placeholder="Nombre del área de servicio" {...field} />
+                                      </FormControl>
+                                      <FormMessage />
+                                  </FormItem>
+                                  )}
+                              />
+                          </div>
+                          <FormField
+                              control={control}
+                              name={`secretariats.${index}.startYear`}
+                              render={({ field }) => (
+                              <FormItem>
+                                  <FormLabel>Año Inicio</FormLabel>
+                                  <FormControl>
+                                    <Input type="number" placeholder="Año" {...field} value={field.value ?? ''}/>
+                                  </FormControl>
+                                  <FormMessage />
+                              </FormItem>
+                              )}
+                          />
+                          <FormField
+                              control={control}
+                              name={`secretariats.${index}.endYear`}
+                              render={({ field }) => (
+                              <FormItem>
+                                  <FormLabel>Año Fin</FormLabel>
+                                  <FormControl>
+                                    <Input type="number" placeholder="Año (o dejar vacío)" {...field} value={field.value ?? ''} />
+                                  </FormControl>
+                                  <FormMessage />
+                              </FormItem>
+                              )}
+                          />
+                      </div>
                     </div>
                   ))}
                 </div>
