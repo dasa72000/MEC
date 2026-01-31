@@ -58,8 +58,8 @@ const fieldMappings = {
   serverRetreatsReencuentro: 'entry.1212632899',
   serverRetreatsRenovacion: 'entry.94533679',
   serverRetreatsEscuela: 'entry.1825921011',
-  serverRetreatsPastoreo: 'entry.TODO_PASTOREO_ID',
-  serverRetreatsConvivenciaFamiliar: 'entry.TODO_CONVIVENCIA_ID',
+  serverRetreatsPastoreo: 'entry.1859552175',
+  serverRetreatsConvivenciaFamiliar: 'entry.851335148',
   
   // Secretarías y Asamblea
   secretariats: 'entry.1828306218',
