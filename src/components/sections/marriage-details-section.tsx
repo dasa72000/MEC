@@ -102,6 +102,11 @@ export function MarriageDetailsSection({ control }: MarriageDetailsSectionProps)
                                                 </FormControl>
                                                 <SelectContent>
                                                     <SelectItem value="El Salvador">El Salvador</SelectItem>
+                                                    <SelectItem value="Honduras">Honduras</SelectItem>
+                                                    <SelectItem value="Nicaragua">Nicaragua</SelectItem>
+                                                    <SelectItem value="Panama">Panamá</SelectItem>
+                                                    <SelectItem value="Estados Unidos">Estados Unidos</SelectItem>
+                                                    <SelectItem value="Canada">Canadá</SelectItem>
                                                 </SelectContent>
                                             </Select>
                                             <FormMessage />
@@ -115,7 +120,7 @@ export function MarriageDetailsSection({ control }: MarriageDetailsSectionProps)
                                         <FormItem>
                                             <FormLabel>Numero de Afiliado</FormLabel>
                                             <FormControl>
-                                                <Input placeholder="Número" {...field} />
+                                                <Input type="number" placeholder="Número" {...field} />
                                             </FormControl>
                                             <FormMessage />
                                         </FormItem>

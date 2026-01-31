@@ -13,7 +13,7 @@ export function AppHeader() {
           Movimiento Encuentros Conyugales
         </h1>
         <p className="text-md md:text-lg text-primary-foreground/90 mt-1">Censo 2026</p>
-        <p className="text-xs text-primary-foreground/70 mt-2">Version: 20260131</p>
+        <p className="text-xs text-primary-foreground/70 mt-2">Version: 2026.1.30</p>
       </div>
     </header>
   );
