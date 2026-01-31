@@ -21,45 +21,66 @@ const YEARS = Array.from({ length: 100 }, (_, i) => CURRENT_YEAR - i);
 const MONTHS = Array.from({ length: 12 }, (_, i) => i + 1);
 const DAYS = Array.from({ length: 31 }, (_, i) => i + 1);
 
+// Helper function to parse a full date string
+const getPartsFromValue = (value: string | undefined): [string, string, string] => {
+  if (value && /^\d{2}\/\d{2}\/\d{4}$/.test(value)) {
+    const [d, m, y] = value.split('/');
+    return [String(Number(d)), String(Number(m)), y];
+  }
+  return ['', '', ''];
+};
+
 export function DateSelector({ value, onChange }: DateSelectorProps) {
-  const [day, month, year] = React.useMemo(() => {
-    if (value && /^\d{2}\/\d{2}\/\d{4}$/.test(value)) {
-      const [d, m, y] = value.split("/");
-      return [String(Number(d)), String(Number(m)), y];
+  // Internal state for each part of the date
+  const [day, setDay] = React.useState(() => getPartsFromValue(value)[0]);
+  const [month, setMonth] = React.useState(() => getPartsFromValue(value)[1]);
+  const [year, setYear] = React.useState(() => getPartsFromValue(value)[2]);
+
+  // Sync state down from `value` prop, e.g., on form reset.
+  // It ignores 'PARTIAL' to avoid wiping the user's partial input.
+  React.useEffect(() => {
+    if (value !== 'PARTIAL') {
+        const [d, m, y] = getPartsFromValue(value);
+        setDay(d);
+        setMonth(m);
+        setYear(y);
     }
-    return ["", "", ""];
   }, [value]);
 
-  const triggerChange = (newDay: string, newMonth: string, newYear: string) => {
-    if (newDay && newMonth && newYear) {
-      const formattedDay = String(newDay).padStart(2, "0");
-      const formattedMonth = String(newMonth).padStart(2, "0");
-      onChange(`${formattedDay}/${formattedMonth}/${newYear}`);
-    } else if (!newDay && !newMonth && !newYear) {
-      onChange('');
+  // Report state up to react-hook-form when any part changes.
+  React.useEffect(() => {
+    const newCompleteDate = day && month && year ? `${String(day).padStart(2, '0')}/${String(month).padStart(2, '0')}/${year}` : null;
+    
+    if (newCompleteDate) {
+        // If a complete date is formed, report it if it's different.
+        if (newCompleteDate !== value) {
+            onChange(newCompleteDate);
+        }
+    } else if (day || month || year) {
+        // If date is partially filled, report 'PARTIAL' for validation.
+        if (value !== 'PARTIAL') {
+            onChange('PARTIAL');
+        }
     } else {
-      onChange('PARTIAL');
+        // If all parts are empty, report empty string.
+        if (value !== '') {
+            onChange('');
+        }
     }
-  };
-  
-  const handleDayChange = (d: string) => {
-    triggerChange(d, month, year);
-  };
-  const handleMonthChange = (m: string) => {
-    triggerChange(day, m, year);
-  };
-  const handleYearChange = (y: string) => {
-    triggerChange(day, month, y);
-  };
+  // Adding `onChange` and `value` to dependency array to follow linting rules and handle edge cases.
+  // The guards inside the effect prevent infinite loops.
+  }, [day, month, year, onChange, value]);
 
   const handleClear = () => {
-    onChange('');
+    setDay('');
+    setMonth('');
+    setYear('');
   };
 
   return (
     <div className="flex items-center gap-2">
       <div className="grid grid-cols-3 gap-2 grow">
-        <Select value={day} onValueChange={handleDayChange}>
+        <Select value={day} onValueChange={setDay}>
           <SelectTrigger>
             <SelectValue placeholder="Día" />
           </SelectTrigger>
@@ -71,7 +92,7 @@ export function DateSelector({ value, onChange }: DateSelectorProps) {
             ))}
           </SelectContent>
         </Select>
-        <Select value={month} onValueChange={handleMonthChange}>
+        <Select value={month} onValueChange={setMonth}>
           <SelectTrigger>
             <SelectValue placeholder="Mes" />
           </SelectTrigger>
@@ -86,7 +107,7 @@ export function DateSelector({ value, onChange }: DateSelectorProps) {
             })}
           </SelectContent>
         </Select>
-        <Select value={year} onValueChange={handleYearChange}>
+        <Select value={year} onValueChange={setYear}>
           <SelectTrigger>
             <SelectValue placeholder="Año" />
           </SelectTrigger>
