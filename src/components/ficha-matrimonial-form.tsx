@@ -9,6 +9,16 @@ import { Button } from "@/components/ui/button";
 import {
   Form
 } from "@/components/ui/form";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 import { useToast } from "@/hooks/use-toast";
 import {
   fichaMatrimonialSchema,
@@ -27,6 +37,8 @@ import { submitToGoogleForm } from "@/lib/google-form-helpers";
 export function FichaMatrimonialForm() {
   const [isLoading, setIsLoading] = useState(false);
   const [activeTab, setActiveTab] = useState('groom');
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [formData, setFormData] = useState<FichaMatrimonialData | null>(null);
   const { toast } = useToast();
 
   const form = useForm<FichaMatrimonialData>({
@@ -81,11 +93,18 @@ export function FichaMatrimonialForm() {
   });
   
   function onSubmit(data: FichaMatrimonialData) {
+    setFormData(data);
+    setIsModalOpen(true);
+  }
+
+  function handleConfirmSubmit() {
+    if (!formData) return;
+
     setIsLoading(true);
     try {
-      submitToGoogleForm(data);
+      submitToGoogleForm(formData);
       toast({
-        title: "✅ Formulario preparado",
+        title: "✅ Redireccionando...",
         description: "Se ha abierto una nueva pestaña. Por favor, revisa los datos y haz clic en 'Enviar' en esa página para finalizar.",
         duration: 8000,
       });
@@ -99,6 +118,8 @@ export function FichaMatrimonialForm() {
         });
     } finally {
         setIsLoading(false);
+        setIsModalOpen(false);
+        setFormData(null);
     }
   }
 
@@ -152,32 +173,52 @@ export function FichaMatrimonialForm() {
   };
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit, onInvalid)} className="space-y-8">
-        <MarriageDetailsSection control={form.control} />
+    <>
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit, onInvalid)} className="space-y-8">
+          <MarriageDetailsSection control={form.control} />
 
-        <PersonDetailsSection 
-          control={form.control} 
-          activeTab={activeTab}
-          onTabChange={setActiveTab}
-        />
+          <PersonDetailsSection 
+            control={form.control} 
+            activeTab={activeTab}
+            onTabChange={setActiveTab}
+          />
 
-        <AddressSection control={form.control} />
+          <AddressSection control={form.control} />
 
-        <GrowthLadderSection control={form.control} />
+          <GrowthLadderSection control={form.control} />
 
-        <ServerRetreatsSection control={form.control} />
-        <SecretariatsSection control={form.control} />
-        <GrowthGroupsSection control={form.control} />
-        <ObservationsSection control={form.control} />
+          <ServerRetreatsSection control={form.control} />
+          <SecretariatsSection control={form.control} />
+          <GrowthGroupsSection control={form.control} />
+          <ObservationsSection control={form.control} />
 
-        <div className="flex justify-end">
-          <Button type="submit" disabled={isLoading} size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90">
-            {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-            Guardar
-          </Button>
-        </div>
-      </form>
-    </Form>
+          <div className="flex justify-end">
+            <Button type="submit" disabled={isLoading} size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90">
+              {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+              Enviar Respuestas
+            </Button>
+          </div>
+        </form>
+      </Form>
+
+      <AlertDialog open={isModalOpen} onOpenChange={setIsModalOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>¡Un último paso!</AlertDialogTitle>
+            <AlertDialogDescription>
+              Serás redirigido a un formulario de Google. Para completar el censo, es <strong>indispensable</strong> que verifiques tus datos y presiones el botón <strong>&apos;Enviar&apos;</strong> en esa página.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel disabled={isLoading}>Cancelar</AlertDialogCancel>
+            <AlertDialogAction onClick={handleConfirmSubmit} disabled={isLoading}>
+              {isLoading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
+              Continuar y Enviar
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+    </>
   );
 }
